@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "generation": 0,
+      "individual_id": 1,
+      "learning_rate": 8.396596902933767e-05,
+      "batch_size": 24,
+      "dropout": 0.13499631187954741,
+      "frozen_layers": 4,
+      "f1_score": 0.46596502309434434,
+      "accuracy": 0.591,
+      "is_best": true
+    }
+  ]
+}

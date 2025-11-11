@@ -1,0 +1,8 @@
+{
+  "learning_rate": 5.05e-05,
+  "batch_size": 34,
+  "dropout": 0.25,
+  "frozen_layers": 3,
+  "f1_score": 0.4174558169103624,
+  "accuracy": 0.573
+}

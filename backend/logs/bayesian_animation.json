@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "trial": 1,
+      "learning_rate": 5.611516415334504e-06,
+      "batch_size": 64,
+      "dropout": 0.36599697090570255,
+      "frozen_layers": 4,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": true
+    }
+  ]
+}

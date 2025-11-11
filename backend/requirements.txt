@@ -1,0 +1,23 @@
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# ML/DL
+torch==2.1.0
+transformers==4.41.0
+tokenizers==0.19.1
+datasets==2.18.0
+scikit-learn==1.3.2
+numpy==1.24.3
+pandas==2.1.3
+pyarrow==15.0.0
+
+# Optimization Algorithms
+pyswarm==0.6
+deap==1.4.1
+optuna==3.4.0
+
+# Utilities
+python-dotenv==1.0.0
+tqdm==4.66.1
