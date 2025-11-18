@@ -9,6 +9,11 @@ import { TrendingUp, Award, Zap } from 'lucide-react'
 export default function ModelComparison() {
   const [modelInfo, setModelInfo] = useState<ModelInfo | null>(null)
   const [loading, setLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const fetchModelInfo = async () => {
@@ -25,7 +30,7 @@ export default function ModelComparison() {
     fetchModelInfo()
   }, [])
 
-  if (loading) {
+  if (!mounted || loading) {
     return (
       <Card>
         <CardHeader>

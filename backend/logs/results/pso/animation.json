@@ -1,0 +1,4498 @@
+{
+  "data": [
+    {
+      "evaluation": 1,
+      "iteration": 0,
+      "particle_id": 0,
+      "learning_rate": 5.05e-05,
+      "batch_size": 16,
+      "dropout": 0.25,
+      "frozen_layers": 0,
+      "f1_score": 0.686223990045982,
+      "accuracy": 0.687,
+      "is_best": true
+    },
+    {
+      "evaluation": 2,
+      "iteration": 0,
+      "particle_id": 1,
+      "learning_rate": 6.278166351852679e-05,
+      "batch_size": 16,
+      "dropout": 0.2137758375342041,
+      "frozen_layers": 0,
+      "f1_score": 0.6868212550089964,
+      "accuracy": 0.689,
+      "is_best": true
+    },
+    {
+      "iteration": 1,
+      "particle_id": 1,
+      "position": [
+        6.278166351852679e-05,
+        0.2137758375342041
+      ],
+      "score": 0.6868212550089964,
+      "f1_score": 0.6868212550089964,
+      "accuracy": 0.689,
+      "params": {
+        "learning_rate": 6.278166351852679e-05,
+        "batch_size": 16,
+        "dropout": 0.2137758375342041,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:30:29.097905"
+    },
+    {
+      "evaluation": 3,
+      "iteration": 0,
+      "particle_id": 2,
+      "learning_rate": 6.095138509462004e-05,
+      "batch_size": 16,
+      "dropout": 0.18456526319779393,
+      "frozen_layers": 0,
+      "f1_score": 0.7039104218808787,
+      "accuracy": 0.704,
+      "is_best": true
+    },
+    {
+      "iteration": 1,
+      "particle_id": 2,
+      "position": [
+        6.095138509462004e-05,
+        0.18456526319779393
+      ],
+      "score": 0.7039104218808787,
+      "f1_score": 0.7039104218808787,
+      "accuracy": 0.704,
+      "params": {
+        "learning_rate": 6.095138509462004e-05,
+        "batch_size": 16,
+        "dropout": 0.18456526319779393,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:30:45.705285"
+    },
+    {
+      "evaluation": 4,
+      "iteration": 0,
+      "particle_id": 3,
+      "learning_rate": 9.829071930163908e-05,
+      "batch_size": 16,
+      "dropout": 0.38724733514458276,
+      "frozen_layers": 0,
+      "f1_score": 0.6876756506586068,
+      "accuracy": 0.686,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 3,
+      "position": [
+        9.829071930163908e-05,
+        0.38724733514458276
+      ],
+      "score": 0.6876756506586068,
+      "f1_score": 0.6876756506586068,
+      "accuracy": 0.704,
+      "params": {
+        "learning_rate": 9.829071930163908e-05,
+        "batch_size": 16,
+        "dropout": 0.38724733514458276,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:31:02.269663"
+    },
+    {
+      "evaluation": 5,
+      "iteration": 0,
+      "particle_id": 4,
+      "learning_rate": 8.40575572319927e-05,
+      "batch_size": 16,
+      "dropout": 0.3281348535934512,
+      "frozen_layers": 0,
+      "f1_score": 0.6835933097739266,
+      "accuracy": 0.682,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 4,
+      "position": [
+        8.40575572319927e-05,
+        0.3281348535934512
+      ],
+      "score": 0.6835933097739266,
+      "f1_score": 0.6835933097739266,
+      "accuracy": 0.704,
+      "params": {
+        "learning_rate": 8.40575572319927e-05,
+        "batch_size": 16,
+        "dropout": 0.3281348535934512,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:31:19.317973"
+    },
+    {
+      "evaluation": 6,
+      "iteration": 0,
+      "particle_id": 5,
+      "learning_rate": 3.702575867571882e-05,
+      "batch_size": 16,
+      "dropout": 0.328333882269701,
+      "frozen_layers": 0,
+      "f1_score": 0.6793704578579687,
+      "accuracy": 0.684,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 5,
+      "position": [
+        3.702575867571882e-05,
+        0.328333882269701
+      ],
+      "score": 0.6793704578579687,
+      "f1_score": 0.6793704578579687,
+      "accuracy": 0.704,
+      "params": {
+        "learning_rate": 3.702575867571882e-05,
+        "batch_size": 16,
+        "dropout": 0.328333882269701,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:31:37.613851"
+    },
+    {
+      "evaluation": 7,
+      "iteration": 0,
+      "particle_id": 6,
+      "learning_rate": 3.955589893725097e-05,
+      "batch_size": 16,
+      "dropout": 0.2961732616596038,
+      "frozen_layers": 0,
+      "f1_score": 0.6784316230772306,
+      "accuracy": 0.679,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 6,
+      "position": [
+        3.955589893725097e-05,
+        0.2961732616596038
+      ],
+      "score": 0.6784316230772306,
+      "f1_score": 0.6784316230772306,
+      "accuracy": 0.704,
+      "params": {
+        "learning_rate": 3.955589893725097e-05,
+        "batch_size": 16,
+        "dropout": 0.2961732616596038,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:31:55.393982"
+    },
+    {
+      "evaluation": 8,
+      "iteration": 0,
+      "particle_id": 7,
+      "learning_rate": 4.2413477391165683e-05,
+      "batch_size": 16,
+      "dropout": 0.17211313694337937,
+      "frozen_layers": 0,
+      "f1_score": 0.6817074129907584,
+      "accuracy": 0.685,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 7,
+      "position": [
+        4.2413477391165683e-05,
+        0.17211313694337937
+      ],
+      "score": 0.6817074129907584,
+      "f1_score": 0.6817074129907584,
+      "accuracy": 0.704,
+      "params": {
+        "learning_rate": 4.2413477391165683e-05,
+        "batch_size": 16,
+        "dropout": 0.17211313694337937,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:32:13.298485"
+    },
+    {
+      "evaluation": 9,
+      "iteration": 0,
+      "particle_id": 8,
+      "learning_rate": 7.054796281067849e-05,
+      "batch_size": 16,
+      "dropout": 0.0697104600910971,
+      "frozen_layers": 0,
+      "f1_score": 0.707473059979668,
+      "accuracy": 0.706,
+      "is_best": true
+    },
+    {
+      "iteration": 1,
+      "particle_id": 8,
+      "position": [
+        7.054796281067849e-05,
+        0.0697104600910971
+      ],
+      "score": 0.707473059979668,
+      "f1_score": 0.707473059979668,
+      "accuracy": 0.706,
+      "params": {
+        "learning_rate": 7.054796281067849e-05,
+        "batch_size": 16,
+        "dropout": 0.0697104600910971,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:32:31.637794"
+    },
+    {
+      "evaluation": 10,
+      "iteration": 0,
+      "particle_id": 9,
+      "learning_rate": 8.700683979458197e-05,
+      "batch_size": 16,
+      "dropout": 0.24599952189398605,
+      "frozen_layers": 0,
+      "f1_score": 0.6938996781231774,
+      "accuracy": 0.695,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 9,
+      "position": [
+        8.700683979458197e-05,
+        0.24599952189398605
+      ],
+      "score": 0.6938996781231774,
+      "f1_score": 0.6938996781231774,
+      "accuracy": 0.706,
+      "params": {
+        "learning_rate": 8.700683979458197e-05,
+        "batch_size": 16,
+        "dropout": 0.24599952189398605,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:32:50.028567"
+    },
+    {
+      "evaluation": 11,
+      "iteration": 0,
+      "particle_id": 10,
+      "learning_rate": 3.578244385285563e-05,
+      "batch_size": 16,
+      "dropout": 0.12975467891353465,
+      "frozen_layers": 0,
+      "f1_score": 0.6879055798203857,
+      "accuracy": 0.688,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 10,
+      "position": [
+        3.578244385285563e-05,
+        0.12975467891353465
+      ],
+      "score": 0.6879055798203857,
+      "f1_score": 0.6879055798203857,
+      "accuracy": 0.706,
+      "params": {
+        "learning_rate": 3.578244385285563e-05,
+        "batch_size": 16,
+        "dropout": 0.12975467891353465,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:33:06.896053"
+    },
+    {
+      "evaluation": 12,
+      "iteration": 1,
+      "particle_id": 11,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.010673453139823208,
+      "frozen_layers": 0,
+      "f1_score": 0.7184857037582164,
+      "accuracy": 0.717,
+      "is_best": true
+    },
+    {
+      "iteration": 2,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.010673453139823208
+      ],
+      "score": 0.7184857037582164,
+      "f1_score": 0.7184857037582164,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.010673453139823208,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:33:23.508488"
+    },
+    {
+      "evaluation": 13,
+      "iteration": 1,
+      "particle_id": 12,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.16413324511906868,
+      "frozen_layers": 0,
+      "f1_score": 0.6922611810925607,
+      "accuracy": 0.691,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.16413324511906868
+      ],
+      "score": 0.6922611810925607,
+      "f1_score": 0.6922611810925607,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.16413324511906868,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:33:39.955322"
+    },
+    {
+      "evaluation": 14,
+      "iteration": 1,
+      "particle_id": 13,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.15899972354193878,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.15899972354193878
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.15899972354193878,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:33:57.516425"
+    },
+    {
+      "evaluation": 15,
+      "iteration": 1,
+      "particle_id": 14,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.061211264865724146,
+      "frozen_layers": 0,
+      "f1_score": 0.4498533485732551,
+      "accuracy": 0.581,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.061211264865724146
+      ],
+      "score": 0.4498533485732551,
+      "f1_score": 0.4498533485732551,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.061211264865724146,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:34:16.333563"
+    },
+    {
+      "evaluation": 16,
+      "iteration": 1,
+      "particle_id": 15,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.025324277140939933,
+      "frozen_layers": 0,
+      "f1_score": 0.7057235044025081,
+      "accuracy": 0.705,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.025324277140939933
+      ],
+      "score": 0.7057235044025081,
+      "f1_score": 0.7057235044025081,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.025324277140939933,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:34:34.346683"
+    },
+    {
+      "evaluation": 17,
+      "iteration": 1,
+      "particle_id": 16,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.030858329502254256,
+      "frozen_layers": 0,
+      "f1_score": 0.7071337740618314,
+      "accuracy": 0.706,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.030858329502254256
+      ],
+      "score": 0.7071337740618314,
+      "f1_score": 0.7071337740618314,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.030858329502254256,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:34:51.386785"
+    },
+    {
+      "evaluation": 18,
+      "iteration": 1,
+      "particle_id": 17,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.19860447175871626,
+      "frozen_layers": 0,
+      "f1_score": 0.3128389743493239,
+      "accuracy": 0.447,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.19860447175871626
+      ],
+      "score": 0.3128389743493239,
+      "f1_score": 0.3128389743493239,
+      "accuracy": 0.717,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.19860447175871626,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:35:10.205180"
+    },
+    {
+      "evaluation": 19,
+      "iteration": 1,
+      "particle_id": 18,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.012933288472815364,
+      "frozen_layers": 0,
+      "f1_score": 0.7188926948051949,
+      "accuracy": 0.718,
+      "is_best": true
+    },
+    {
+      "iteration": 2,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.012933288472815364
+      ],
+      "score": 0.7188926948051949,
+      "f1_score": 0.7188926948051949,
+      "accuracy": 0.718,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.012933288472815364,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:35:28.156935"
+    },
+    {
+      "evaluation": 20,
+      "iteration": 1,
+      "particle_id": 19,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.23186075052073607,
+      "frozen_layers": 0,
+      "f1_score": 0.49127237854207545,
+      "accuracy": 0.529,
+      "is_best": false
+    },
+    {
+      "iteration": 2,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.23186075052073607
+      ],
+      "score": 0.49127237854207545,
+      "f1_score": 0.49127237854207545,
+      "accuracy": 0.718,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.23186075052073607,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:35:44.808514"
+    },
+    {
+      "evaluation": 21,
+      "iteration": 1,
+      "particle_id": 20,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.026178812454192124,
+      "frozen_layers": 0,
+      "f1_score": 0.7320979214042034,
+      "accuracy": 0.731,
+      "is_best": true
+    },
+    {
+      "iteration": 2,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.026178812454192124
+      ],
+      "score": 0.7320979214042034,
+      "f1_score": 0.7320979214042034,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.026178812454192124,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:36:01.731783"
+    },
+    {
+      "evaluation": 22,
+      "iteration": 2,
+      "particle_id": 21,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7264479499270474,
+      "accuracy": 0.725,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7264479499270474,
+      "f1_score": 0.7264479499270474,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:36:18.808715"
+    },
+    {
+      "evaluation": 23,
+      "iteration": 2,
+      "particle_id": 22,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.014139014288054919,
+      "frozen_layers": 0,
+      "f1_score": 0.706889423076923,
+      "accuracy": 0.708,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.014139014288054919
+      ],
+      "score": 0.706889423076923,
+      "f1_score": 0.706889423076923,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.014139014288054919,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:36:35.683519"
+    },
+    {
+      "evaluation": 24,
+      "iteration": 2,
+      "particle_id": 23,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.4219686212366034,
+      "accuracy": 0.575,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.4219686212366034,
+      "f1_score": 0.4219686212366034,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:36:52.998516"
+    },
+    {
+      "evaluation": 25,
+      "iteration": 2,
+      "particle_id": 24,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.12682402076366517,
+      "frozen_layers": 0,
+      "f1_score": 0.4875867281105991,
+      "accuracy": 0.529,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.12682402076366517
+      ],
+      "score": 0.4875867281105991,
+      "f1_score": 0.4875867281105991,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.12682402076366517,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:37:10.043786"
+    },
+    {
+      "evaluation": 26,
+      "iteration": 2,
+      "particle_id": 25,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7138243952761327,
+      "accuracy": 0.713,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7138243952761327,
+      "f1_score": 0.7138243952761327,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:37:27.019235"
+    },
+    {
+      "evaluation": 27,
+      "iteration": 2,
+      "particle_id": 26,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7093767400089808,
+      "accuracy": 0.708,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7093767400089808,
+      "f1_score": 0.7093767400089808,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:37:43.735343"
+    },
+    {
+      "evaluation": 28,
+      "iteration": 2,
+      "particle_id": 27,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.10199385003325664,
+      "frozen_layers": 0,
+      "f1_score": 0.5433470983661584,
+      "accuracy": 0.541,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.10199385003325664
+      ],
+      "score": 0.5433470983661584,
+      "f1_score": 0.5433470983661584,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.10199385003325664,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:38:00.493266"
+    },
+    {
+      "evaluation": 29,
+      "iteration": 2,
+      "particle_id": 28,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6904817406593231,
+      "accuracy": 0.689,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6904817406593231,
+      "f1_score": 0.6904817406593231,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:38:17.205083"
+    },
+    {
+      "evaluation": 30,
+      "iteration": 2,
+      "particle_id": 29,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.48817745160218656,
+      "accuracy": 0.549,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.48817745160218656,
+      "f1_score": 0.48817745160218656,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:38:34.210803"
+    },
+    {
+      "evaluation": 31,
+      "iteration": 2,
+      "particle_id": 30,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7252728466705212,
+      "accuracy": 0.725,
+      "is_best": false
+    },
+    {
+      "iteration": 3,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7252728466705212,
+      "f1_score": 0.7252728466705212,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:38:50.999563"
+    },
+    {
+      "evaluation": 32,
+      "iteration": 3,
+      "particle_id": 31,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.713420293715268,
+      "accuracy": 0.712,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.713420293715268,
+      "f1_score": 0.713420293715268,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:39:07.855684"
+    },
+    {
+      "evaluation": 33,
+      "iteration": 3,
+      "particle_id": 32,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7116918138041735,
+      "accuracy": 0.724,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7116918138041735,
+      "f1_score": 0.7116918138041735,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:39:24.318075"
+    },
+    {
+      "evaluation": 34,
+      "iteration": 3,
+      "particle_id": 33,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.23718566366414914,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.23718566366414914
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.23718566366414914,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:39:41.326971"
+    },
+    {
+      "evaluation": 35,
+      "iteration": 3,
+      "particle_id": 34,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.23269050343193537,
+      "frozen_layers": 0,
+      "f1_score": 0.2903295053888616,
+      "accuracy": 0.438,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.23269050343193537
+      ],
+      "score": 0.2903295053888616,
+      "f1_score": 0.2903295053888616,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.23269050343193537,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:39:59.110278"
+    },
+    {
+      "evaluation": 36,
+      "iteration": 3,
+      "particle_id": 35,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7173758801111039,
+      "accuracy": 0.716,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7173758801111039,
+      "f1_score": 0.7173758801111039,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:40:16.124624"
+    },
+    {
+      "evaluation": 37,
+      "iteration": 3,
+      "particle_id": 36,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7243182021170766,
+      "accuracy": 0.725,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7243182021170766,
+      "f1_score": 0.7243182021170766,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:40:32.957352"
+    },
+    {
+      "evaluation": 38,
+      "iteration": 3,
+      "particle_id": 37,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.07950798818174448,
+      "frozen_layers": 0,
+      "f1_score": 0.5618741413268002,
+      "accuracy": 0.564,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.07950798818174448
+      ],
+      "score": 0.5618741413268002,
+      "f1_score": 0.5618741413268002,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.07950798818174448,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:40:50.382618"
+    },
+    {
+      "evaluation": 39,
+      "iteration": 3,
+      "particle_id": 38,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.013333033882721048,
+      "frozen_layers": 0,
+      "f1_score": 0.7029433441558441,
+      "accuracy": 0.702,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.013333033882721048
+      ],
+      "score": 0.7029433441558441,
+      "f1_score": 0.7029433441558441,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.013333033882721048,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:41:09.508644"
+    },
+    {
+      "evaluation": 40,
+      "iteration": 3,
+      "particle_id": 39,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:41:26.898424"
+    },
+    {
+      "evaluation": 41,
+      "iteration": 3,
+      "particle_id": 40,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6868600877407898,
+      "accuracy": 0.687,
+      "is_best": false
+    },
+    {
+      "iteration": 4,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6868600877407898,
+      "f1_score": 0.6868600877407898,
+      "accuracy": 0.731,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:41:44.352092"
+    },
+    {
+      "evaluation": 42,
+      "iteration": 4,
+      "particle_id": 41,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7471108028065921,
+      "accuracy": 0.747,
+      "is_best": true
+    },
+    {
+      "iteration": 5,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7471108028065921,
+      "f1_score": 0.7471108028065921,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:42:01.558686"
+    },
+    {
+      "evaluation": 43,
+      "iteration": 4,
+      "particle_id": 42,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7161210373005804,
+      "accuracy": 0.715,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7161210373005804,
+      "f1_score": 0.7161210373005804,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:42:18.647600"
+    },
+    {
+      "evaluation": 44,
+      "iteration": 4,
+      "particle_id": 43,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.4946560287446494,
+      "frozen_layers": 0,
+      "f1_score": 0.4232558106575964,
+      "accuracy": 0.574,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.4946560287446494
+      ],
+      "score": 0.4232558106575964,
+      "f1_score": 0.4232558106575964,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.4946560287446494,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:42:35.788049"
+    },
+    {
+      "evaluation": 45,
+      "iteration": 4,
+      "particle_id": 44,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.02577918600060697,
+      "frozen_layers": 0,
+      "f1_score": 0.42229786182177725,
+      "accuracy": 0.572,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.02577918600060697
+      ],
+      "score": 0.42229786182177725,
+      "f1_score": 0.42229786182177725,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.02577918600060697,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:42:52.940792"
+    },
+    {
+      "evaluation": 46,
+      "iteration": 4,
+      "particle_id": 45,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7104989207431067,
+      "accuracy": 0.709,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7104989207431067,
+      "f1_score": 0.7104989207431067,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:43:09.977526"
+    },
+    {
+      "evaluation": 47,
+      "iteration": 4,
+      "particle_id": 46,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6838910678551937,
+      "accuracy": 0.687,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6838910678551937,
+      "f1_score": 0.6838910678551937,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:43:26.680532"
+    },
+    {
+      "evaluation": 48,
+      "iteration": 4,
+      "particle_id": 47,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.1071346496629911,
+      "frozen_layers": 0,
+      "f1_score": 0.6049048638640973,
+      "accuracy": 0.603,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.1071346496629911
+      ],
+      "score": 0.6049048638640973,
+      "f1_score": 0.6049048638640973,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.1071346496629911,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:43:43.696439"
+    },
+    {
+      "evaluation": 49,
+      "iteration": 4,
+      "particle_id": 48,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.029000570650541235,
+      "frozen_layers": 0,
+      "f1_score": 0.7131106358156717,
+      "accuracy": 0.712,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.029000570650541235
+      ],
+      "score": 0.7131106358156717,
+      "f1_score": 0.7131106358156717,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.029000570650541235,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:44:01.310360"
+    },
+    {
+      "evaluation": 50,
+      "iteration": 4,
+      "particle_id": 49,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.18833463994575256,
+      "frozen_layers": 0,
+      "f1_score": 0.4192484735718345,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.18833463994575256
+      ],
+      "score": 0.4192484735718345,
+      "f1_score": 0.4192484735718345,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.18833463994575256,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:44:18.736381"
+    },
+    {
+      "evaluation": 51,
+      "iteration": 4,
+      "particle_id": 50,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.04431301928364411,
+      "frozen_layers": 0,
+      "f1_score": 0.7194743232987605,
+      "accuracy": 0.718,
+      "is_best": false
+    },
+    {
+      "iteration": 5,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.04431301928364411
+      ],
+      "score": 0.7194743232987605,
+      "f1_score": 0.7194743232987605,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.04431301928364411,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:44:36.042192"
+    },
+    {
+      "evaluation": 52,
+      "iteration": 5,
+      "particle_id": 51,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7238503753454324,
+      "accuracy": 0.723,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7238503753454324,
+      "f1_score": 0.7238503753454324,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:44:52.979697"
+    },
+    {
+      "evaluation": 53,
+      "iteration": 5,
+      "particle_id": 52,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7161210373005804,
+      "accuracy": 0.715,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7161210373005804,
+      "f1_score": 0.7161210373005804,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:45:09.986475"
+    },
+    {
+      "evaluation": 54,
+      "iteration": 5,
+      "particle_id": 53,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.015939316458137398,
+      "frozen_layers": 0,
+      "f1_score": 0.4281843418898147,
+      "accuracy": 0.577,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.015939316458137398
+      ],
+      "score": 0.4281843418898147,
+      "f1_score": 0.4281843418898147,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.015939316458137398,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:45:27.190316"
+    },
+    {
+      "evaluation": 55,
+      "iteration": 5,
+      "particle_id": 54,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.021909802572707693,
+      "frozen_layers": 0,
+      "f1_score": 0.4232558106575964,
+      "accuracy": 0.574,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.021909802572707693
+      ],
+      "score": 0.4232558106575964,
+      "f1_score": 0.4232558106575964,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.021909802572707693,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:45:44.039344"
+    },
+    {
+      "evaluation": 56,
+      "iteration": 5,
+      "particle_id": 55,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7187696685195636,
+      "accuracy": 0.718,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7187696685195636,
+      "f1_score": 0.7187696685195636,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:46:01.056513"
+    },
+    {
+      "evaluation": 57,
+      "iteration": 5,
+      "particle_id": 56,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7306182462411223,
+      "accuracy": 0.733,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7306182462411223,
+      "f1_score": 0.7306182462411223,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:46:17.909069"
+    },
+    {
+      "evaluation": 58,
+      "iteration": 5,
+      "particle_id": 57,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.13679767810362423,
+      "frozen_layers": 0,
+      "f1_score": 0.3718683424980361,
+      "accuracy": 0.466,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.13679767810362423
+      ],
+      "score": 0.3718683424980361,
+      "f1_score": 0.3718683424980361,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.13679767810362423,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:46:34.684482"
+    },
+    {
+      "evaluation": 59,
+      "iteration": 5,
+      "particle_id": 58,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.023158127216791342,
+      "frozen_layers": 0,
+      "f1_score": 0.6705261385945496,
+      "accuracy": 0.678,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.023158127216791342
+      ],
+      "score": 0.6705261385945496,
+      "f1_score": 0.6705261385945496,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.023158127216791342,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:46:51.730077"
+    },
+    {
+      "evaluation": 60,
+      "iteration": 5,
+      "particle_id": 59,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.3509875185799729,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.3509875185799729
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.3509875185799729,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:47:08.874792"
+    },
+    {
+      "evaluation": 61,
+      "iteration": 5,
+      "particle_id": 60,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0619037083339816,
+      "frozen_layers": 0,
+      "f1_score": 0.7073333441121427,
+      "accuracy": 0.706,
+      "is_best": false
+    },
+    {
+      "iteration": 6,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0619037083339816
+      ],
+      "score": 0.7073333441121427,
+      "f1_score": 0.7073333441121427,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0619037083339816,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:47:25.688225"
+    },
+    {
+      "evaluation": 62,
+      "iteration": 6,
+      "particle_id": 61,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7194603773584906,
+      "accuracy": 0.718,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7194603773584906,
+      "f1_score": 0.7194603773584906,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:47:42.397342"
+    },
+    {
+      "evaluation": 63,
+      "iteration": 6,
+      "particle_id": 62,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7102548644271018,
+      "accuracy": 0.709,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7102548644271018,
+      "f1_score": 0.7102548644271018,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:47:59.622445"
+    },
+    {
+      "evaluation": 64,
+      "iteration": 6,
+      "particle_id": 63,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6163909199158876,
+      "accuracy": 0.615,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.6163909199158876,
+      "f1_score": 0.6163909199158876,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:48:16.879101"
+    },
+    {
+      "evaluation": 65,
+      "iteration": 6,
+      "particle_id": 64,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.36554939938587416,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.36554939938587416
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.36554939938587416,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:48:34.086764"
+    },
+    {
+      "evaluation": 66,
+      "iteration": 6,
+      "particle_id": 65,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7185024488619992,
+      "accuracy": 0.719,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7185024488619992,
+      "f1_score": 0.7185024488619992,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:48:51.121070"
+    },
+    {
+      "evaluation": 67,
+      "iteration": 6,
+      "particle_id": 66,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7221611534991571,
+      "accuracy": 0.722,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7221611534991571,
+      "f1_score": 0.7221611534991571,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:49:07.810731"
+    },
+    {
+      "evaluation": 68,
+      "iteration": 6,
+      "particle_id": 67,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.02094129455170389,
+      "frozen_layers": 0,
+      "f1_score": 0.4483022821389668,
+      "accuracy": 0.581,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.02094129455170389
+      ],
+      "score": 0.4483022821389668,
+      "f1_score": 0.4483022821389668,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.02094129455170389,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:49:24.494361"
+    },
+    {
+      "evaluation": 69,
+      "iteration": 6,
+      "particle_id": 68,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.708550796481067,
+      "accuracy": 0.714,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.708550796481067,
+      "f1_score": 0.708550796481067,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:49:41.077366"
+    },
+    {
+      "evaluation": 70,
+      "iteration": 6,
+      "particle_id": 69,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.022245822183802666,
+      "frozen_layers": 0,
+      "f1_score": 0.5549457873050382,
+      "accuracy": 0.553,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.022245822183802666
+      ],
+      "score": 0.5549457873050382,
+      "f1_score": 0.5549457873050382,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.022245822183802666,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:49:58.267917"
+    },
+    {
+      "evaluation": 71,
+      "iteration": 6,
+      "particle_id": 70,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7070240416374737,
+      "accuracy": 0.706,
+      "is_best": false
+    },
+    {
+      "iteration": 7,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7070240416374737,
+      "f1_score": 0.7070240416374737,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:50:15.276577"
+    },
+    {
+      "evaluation": 72,
+      "iteration": 7,
+      "particle_id": 71,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7124038564305758,
+      "accuracy": 0.711,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7124038564305758,
+      "f1_score": 0.7124038564305758,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:50:32.119227"
+    },
+    {
+      "evaluation": 73,
+      "iteration": 7,
+      "particle_id": 72,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7182668469796067,
+      "accuracy": 0.717,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7182668469796067,
+      "f1_score": 0.7182668469796067,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:50:49.058842"
+    },
+    {
+      "evaluation": 74,
+      "iteration": 7,
+      "particle_id": 73,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.48460883748041433,
+      "accuracy": 0.584,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.48460883748041433,
+      "f1_score": 0.48460883748041433,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:51:05.854940"
+    },
+    {
+      "evaluation": 75,
+      "iteration": 7,
+      "particle_id": 74,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.5,
+      "frozen_layers": 0,
+      "f1_score": 0.5746779418196595,
+      "accuracy": 0.609,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.5
+      ],
+      "score": 0.5746779418196595,
+      "f1_score": 0.5746779418196595,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.5,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:51:22.677064"
+    },
+    {
+      "evaluation": 76,
+      "iteration": 7,
+      "particle_id": 75,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7004716264285173,
+      "accuracy": 0.699,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7004716264285173,
+      "f1_score": 0.7004716264285173,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:51:39.254808"
+    },
+    {
+      "evaluation": 77,
+      "iteration": 7,
+      "particle_id": 76,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.710545423458338,
+      "accuracy": 0.71,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.710545423458338,
+      "f1_score": 0.710545423458338,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:51:56.375186"
+    },
+    {
+      "evaluation": 78,
+      "iteration": 7,
+      "particle_id": 77,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.457178713291655,
+      "accuracy": 0.586,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.457178713291655,
+      "f1_score": 0.457178713291655,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:52:13.150632"
+    },
+    {
+      "evaluation": 79,
+      "iteration": 7,
+      "particle_id": 78,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7131323928377646,
+      "accuracy": 0.714,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7131323928377646,
+      "f1_score": 0.7131323928377646,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:52:30.022127"
+    },
+    {
+      "evaluation": 80,
+      "iteration": 7,
+      "particle_id": 79,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:52:48.193937"
+    },
+    {
+      "evaluation": 81,
+      "iteration": 7,
+      "particle_id": 80,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6977245660843789,
+      "accuracy": 0.698,
+      "is_best": false
+    },
+    {
+      "iteration": 8,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6977245660843789,
+      "f1_score": 0.6977245660843789,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:53:06.562380"
+    },
+    {
+      "evaluation": 82,
+      "iteration": 8,
+      "particle_id": 81,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7164933602762374,
+      "accuracy": 0.719,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7164933602762374,
+      "f1_score": 0.7164933602762374,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:53:23.894619"
+    },
+    {
+      "evaluation": 83,
+      "iteration": 8,
+      "particle_id": 82,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7403578703575379,
+      "accuracy": 0.741,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7403578703575379,
+      "f1_score": 0.7403578703575379,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:53:40.866089"
+    },
+    {
+      "evaluation": 84,
+      "iteration": 8,
+      "particle_id": 83,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.41296439178413324,
+      "frozen_layers": 0,
+      "f1_score": 0.5614352835231474,
+      "accuracy": 0.564,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.41296439178413324
+      ],
+      "score": 0.5614352835231474,
+      "f1_score": 0.5614352835231474,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.41296439178413324,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:53:57.775769"
+    },
+    {
+      "evaluation": 85,
+      "iteration": 8,
+      "particle_id": 84,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.3040686216254077,
+      "frozen_layers": 0,
+      "f1_score": 0.47545288564389354,
+      "accuracy": 0.491,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.3040686216254077
+      ],
+      "score": 0.47545288564389354,
+      "f1_score": 0.47545288564389354,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.3040686216254077,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:54:14.705655"
+    },
+    {
+      "evaluation": 86,
+      "iteration": 8,
+      "particle_id": 85,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.706442291682434,
+      "accuracy": 0.705,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.706442291682434,
+      "f1_score": 0.706442291682434,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:54:31.306269"
+    },
+    {
+      "evaluation": 87,
+      "iteration": 8,
+      "particle_id": 86,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7327741834429768,
+      "accuracy": 0.734,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7327741834429768,
+      "f1_score": 0.7327741834429768,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:54:48.308583"
+    },
+    {
+      "evaluation": 88,
+      "iteration": 8,
+      "particle_id": 87,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.1230246765220664,
+      "frozen_layers": 0,
+      "f1_score": 0.4129191084130978,
+      "accuracy": 0.494,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.1230246765220664
+      ],
+      "score": 0.4129191084130978,
+      "f1_score": 0.4129191084130978,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.1230246765220664,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:55:05.581113"
+    },
+    {
+      "evaluation": 89,
+      "iteration": 8,
+      "particle_id": 88,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 6.604953222601531e-05,
+      "frozen_layers": 0,
+      "f1_score": 0.7237956707020513,
+      "accuracy": 0.723,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        6.604953222601531e-05
+      ],
+      "score": 0.7237956707020513,
+      "f1_score": 0.7237956707020513,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 6.604953222601531e-05,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:55:22.879700"
+    },
+    {
+      "evaluation": 90,
+      "iteration": 8,
+      "particle_id": 89,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.010735555771910259,
+      "frozen_layers": 0,
+      "f1_score": 0.5252092313227622,
+      "accuracy": 0.549,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.010735555771910259
+      ],
+      "score": 0.5252092313227622,
+      "f1_score": 0.5252092313227622,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.010735555771910259,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:55:40.116024"
+    },
+    {
+      "evaluation": 91,
+      "iteration": 8,
+      "particle_id": 90,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7216491840489038,
+      "accuracy": 0.722,
+      "is_best": false
+    },
+    {
+      "iteration": 9,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7216491840489038,
+      "f1_score": 0.7216491840489038,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:55:57.176134"
+    },
+    {
+      "evaluation": 92,
+      "iteration": 9,
+      "particle_id": 91,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7294762597414397,
+      "accuracy": 0.731,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7294762597414397,
+      "f1_score": 0.7294762597414397,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:56:14.884436"
+    },
+    {
+      "evaluation": 93,
+      "iteration": 9,
+      "particle_id": 92,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7184282422742732,
+      "accuracy": 0.717,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7184282422742732,
+      "f1_score": 0.7184282422742732,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:56:33.748892"
+    },
+    {
+      "evaluation": 94,
+      "iteration": 9,
+      "particle_id": 93,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.5,
+      "frozen_layers": 0,
+      "f1_score": 0.43104295704295703,
+      "accuracy": 0.494,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.5
+      ],
+      "score": 0.43104295704295703,
+      "f1_score": 0.43104295704295703,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.5,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:56:52.540643"
+    },
+    {
+      "evaluation": 95,
+      "iteration": 9,
+      "particle_id": 94,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.5942353536714308,
+      "accuracy": 0.594,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.5942353536714308,
+      "f1_score": 0.5942353536714308,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:57:09.334989"
+    },
+    {
+      "evaluation": 96,
+      "iteration": 9,
+      "particle_id": 95,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7245130727297147,
+      "accuracy": 0.725,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7245130727297147,
+      "f1_score": 0.7245130727297147,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:57:26.130455"
+    },
+    {
+      "evaluation": 97,
+      "iteration": 9,
+      "particle_id": 96,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7032247605542404,
+      "accuracy": 0.702,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7032247605542404,
+      "f1_score": 0.7032247605542404,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:57:43.156797"
+    },
+    {
+      "evaluation": 98,
+      "iteration": 9,
+      "particle_id": 97,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.21771693657640223,
+      "frozen_layers": 0,
+      "f1_score": 0.4318427269826933,
+      "accuracy": 0.466,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.21771693657640223
+      ],
+      "score": 0.4318427269826933,
+      "f1_score": 0.4318427269826933,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.21771693657640223,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:58:00.701217"
+    },
+    {
+      "evaluation": 99,
+      "iteration": 9,
+      "particle_id": 98,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 9.298901644486768e-05,
+      "frozen_layers": 0,
+      "f1_score": 0.7181131703721553,
+      "accuracy": 0.717,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        9.298901644486768e-05
+      ],
+      "score": 0.7181131703721553,
+      "f1_score": 0.7181131703721553,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 9.298901644486768e-05,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:58:17.771266"
+    },
+    {
+      "evaluation": 100,
+      "iteration": 9,
+      "particle_id": 99,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.051193416978747366,
+      "frozen_layers": 0,
+      "f1_score": 0.5282194299478121,
+      "accuracy": 0.534,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.051193416978747366
+      ],
+      "score": 0.5282194299478121,
+      "f1_score": 0.5282194299478121,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.051193416978747366,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:58:34.483690"
+    },
+    {
+      "evaluation": 101,
+      "iteration": 9,
+      "particle_id": 100,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7028672398051583,
+      "accuracy": 0.703,
+      "is_best": false
+    },
+    {
+      "iteration": 10,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7028672398051583,
+      "f1_score": 0.7028672398051583,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:58:51.630030"
+    },
+    {
+      "evaluation": 102,
+      "iteration": 10,
+      "particle_id": 101,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7085491903291408,
+      "accuracy": 0.707,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7085491903291408,
+      "f1_score": 0.7085491903291408,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:59:08.622507"
+    },
+    {
+      "evaluation": 103,
+      "iteration": 10,
+      "particle_id": 102,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7104468528301278,
+      "accuracy": 0.709,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7104468528301278,
+      "f1_score": 0.7104468528301278,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:59:25.893332"
+    },
+    {
+      "evaluation": 104,
+      "iteration": 10,
+      "particle_id": 103,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.5,
+      "frozen_layers": 0,
+      "f1_score": 0.45247934690942093,
+      "accuracy": 0.583,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.5
+      ],
+      "score": 0.45247934690942093,
+      "f1_score": 0.45247934690942093,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.5,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T16:59:43.988413"
+    },
+    {
+      "evaluation": 105,
+      "iteration": 10,
+      "particle_id": 104,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.4592313234063063,
+      "accuracy": 0.563,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 4,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.4592313234063063,
+      "f1_score": 0.4592313234063063,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:00:01.226860"
+    },
+    {
+      "evaluation": 106,
+      "iteration": 10,
+      "particle_id": 105,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6944921188651165,
+      "accuracy": 0.694,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6944921188651165,
+      "f1_score": 0.6944921188651165,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:00:17.846859"
+    },
+    {
+      "evaluation": 107,
+      "iteration": 10,
+      "particle_id": 106,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7286964975958314,
+      "accuracy": 0.728,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7286964975958314,
+      "f1_score": 0.7286964975958314,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:00:34.731564"
+    },
+    {
+      "evaluation": 108,
+      "iteration": 10,
+      "particle_id": 107,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.24647291278754288,
+      "frozen_layers": 0,
+      "f1_score": 0.5771603132056039,
+      "accuracy": 0.598,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.24647291278754288
+      ],
+      "score": 0.5771603132056039,
+      "f1_score": 0.5771603132056039,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.24647291278754288,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:00:51.795984"
+    },
+    {
+      "evaluation": 109,
+      "iteration": 10,
+      "particle_id": 108,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.732686254984128,
+      "accuracy": 0.732,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.732686254984128,
+      "f1_score": 0.732686254984128,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:01:08.682214"
+    },
+    {
+      "evaluation": 110,
+      "iteration": 10,
+      "particle_id": 109,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.18880280381147446,
+      "frozen_layers": 0,
+      "f1_score": 0.4192484735718345,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.18880280381147446
+      ],
+      "score": 0.4192484735718345,
+      "f1_score": 0.4192484735718345,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.18880280381147446,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:01:25.379806"
+    },
+    {
+      "evaluation": 111,
+      "iteration": 10,
+      "particle_id": 110,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.024933009850055858,
+      "frozen_layers": 0,
+      "f1_score": 0.7313233383067815,
+      "accuracy": 0.73,
+      "is_best": false
+    },
+    {
+      "iteration": 11,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.024933009850055858
+      ],
+      "score": 0.7313233383067815,
+      "f1_score": 0.7313233383067815,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.024933009850055858,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:01:43.535795"
+    },
+    {
+      "evaluation": 112,
+      "iteration": 11,
+      "particle_id": 111,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6995915981095747,
+      "accuracy": 0.699,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6995915981095747,
+      "f1_score": 0.6995915981095747,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:02:02.522745"
+    },
+    {
+      "evaluation": 113,
+      "iteration": 11,
+      "particle_id": 112,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7299346263326029,
+      "accuracy": 0.732,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7299346263326029,
+      "f1_score": 0.7299346263326029,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:02:20.037399"
+    },
+    {
+      "evaluation": 114,
+      "iteration": 11,
+      "particle_id": 113,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.5917716319706613,
+      "accuracy": 0.606,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 3,
+      "position": [
+        1e-06,
+        0.0
+      ],
+      "score": 0.5917716319706613,
+      "f1_score": 0.5917716319706613,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:02:37.145331"
+    },
+    {
+      "evaluation": 115,
+      "iteration": 11,
+      "particle_id": 114,
+      "learning_rate": 3.374921291679419e-05,
+      "batch_size": 16,
+      "dropout": 0.18847044958047615,
+      "frozen_layers": 0,
+      "f1_score": 0.6873718117343649,
+      "accuracy": 0.689,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 4,
+      "position": [
+        3.374921291679419e-05,
+        0.18847044958047615
+      ],
+      "score": 0.6873718117343649,
+      "f1_score": 0.6873718117343649,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 3.374921291679419e-05,
+        "batch_size": 16,
+        "dropout": 0.18847044958047615,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:02:54.366408"
+    },
+    {
+      "evaluation": 116,
+      "iteration": 11,
+      "particle_id": 115,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7058195396419438,
+      "accuracy": 0.706,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7058195396419438,
+      "f1_score": 0.7058195396419438,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:03:11.765913"
+    },
+    {
+      "evaluation": 117,
+      "iteration": 11,
+      "particle_id": 116,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7073963868997855,
+      "accuracy": 0.706,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7073963868997855,
+      "f1_score": 0.7073963868997855,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:03:28.529233"
+    },
+    {
+      "evaluation": 118,
+      "iteration": 11,
+      "particle_id": 117,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.005136660705702484,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.005136660705702484
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.005136660705702484,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:03:45.334170"
+    },
+    {
+      "evaluation": 119,
+      "iteration": 11,
+      "particle_id": 118,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6854101879680811,
+      "accuracy": 0.687,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6854101879680811,
+      "f1_score": 0.6854101879680811,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:04:02.054561"
+    },
+    {
+      "evaluation": 120,
+      "iteration": 11,
+      "particle_id": 119,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.08646503994512626,
+      "frozen_layers": 0,
+      "f1_score": 0.41912260291579445,
+      "accuracy": 0.569,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.08646503994512626
+      ],
+      "score": 0.41912260291579445,
+      "f1_score": 0.41912260291579445,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.08646503994512626,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:04:18.993129"
+    },
+    {
+      "evaluation": 121,
+      "iteration": 11,
+      "particle_id": 120,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.033074179545433326,
+      "frozen_layers": 0,
+      "f1_score": 0.7194899544537471,
+      "accuracy": 0.718,
+      "is_best": false
+    },
+    {
+      "iteration": 12,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.033074179545433326
+      ],
+      "score": 0.7194899544537471,
+      "f1_score": 0.7194899544537471,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.033074179545433326,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:04:36.567949"
+    },
+    {
+      "evaluation": 122,
+      "iteration": 12,
+      "particle_id": 121,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7250643593233521,
+      "accuracy": 0.724,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7250643593233521,
+      "f1_score": 0.7250643593233521,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:04:53.721108"
+    },
+    {
+      "evaluation": 123,
+      "iteration": 12,
+      "particle_id": 122,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7064581509460072,
+      "accuracy": 0.705,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7064581509460072,
+      "f1_score": 0.7064581509460072,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:05:11.062352"
+    },
+    {
+      "evaluation": 124,
+      "iteration": 12,
+      "particle_id": 123,
+      "learning_rate": 5.341807694924904e-05,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7090300199484261,
+      "accuracy": 0.708,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 3,
+      "position": [
+        5.341807694924904e-05,
+        0.0
+      ],
+      "score": 0.7090300199484261,
+      "f1_score": 0.7090300199484261,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 5.341807694924904e-05,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:05:28.725738"
+    },
+    {
+      "evaluation": 125,
+      "iteration": 12,
+      "particle_id": 124,
+      "learning_rate": 6.519498889054554e-05,
+      "batch_size": 16,
+      "dropout": 0.29696022526833155,
+      "frozen_layers": 0,
+      "f1_score": 0.6775863896188447,
+      "accuracy": 0.679,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 4,
+      "position": [
+        6.519498889054554e-05,
+        0.29696022526833155
+      ],
+      "score": 0.6775863896188447,
+      "f1_score": 0.6775863896188447,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 6.519498889054554e-05,
+        "batch_size": 16,
+        "dropout": 0.29696022526833155,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:05:45.497481"
+    },
+    {
+      "evaluation": 126,
+      "iteration": 12,
+      "particle_id": 125,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7224571428571428,
+      "accuracy": 0.721,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7224571428571428,
+      "f1_score": 0.7224571428571428,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:06:02.462126"
+    },
+    {
+      "evaluation": 127,
+      "iteration": 12,
+      "particle_id": 126,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.707911632396002,
+      "accuracy": 0.708,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.707911632396002,
+      "f1_score": 0.707911632396002,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:06:19.344930"
+    },
+    {
+      "evaluation": 128,
+      "iteration": 12,
+      "particle_id": 127,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.020433901264431988,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.020433901264431988
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.020433901264431988,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:06:37.194330"
+    },
+    {
+      "evaluation": 129,
+      "iteration": 12,
+      "particle_id": 128,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6944726705743077,
+      "accuracy": 0.696,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6944726705743077,
+      "f1_score": 0.6944726705743077,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:06:54.159479"
+    },
+    {
+      "evaluation": 130,
+      "iteration": 12,
+      "particle_id": 129,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.01476509075668185,
+      "frozen_layers": 0,
+      "f1_score": 0.45411354838709667,
+      "accuracy": 0.586,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.01476509075668185
+      ],
+      "score": 0.45411354838709667,
+      "f1_score": 0.45411354838709667,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.01476509075668185,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:07:11.236715"
+    },
+    {
+      "evaluation": 131,
+      "iteration": 12,
+      "particle_id": 130,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7037920000000001,
+      "accuracy": 0.703,
+      "is_best": false
+    },
+    {
+      "iteration": 13,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7037920000000001,
+      "f1_score": 0.7037920000000001,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:07:27.844186"
+    },
+    {
+      "evaluation": 132,
+      "iteration": 13,
+      "particle_id": 131,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.6926711868881575,
+      "accuracy": 0.693,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.6926711868881575,
+      "f1_score": 0.6926711868881575,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:07:45.175053"
+    },
+    {
+      "evaluation": 133,
+      "iteration": 13,
+      "particle_id": 132,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7064154529972512,
+      "accuracy": 0.705,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7064154529972512,
+      "f1_score": 0.7064154529972512,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:08:02.904362"
+    },
+    {
+      "evaluation": 134,
+      "iteration": 13,
+      "particle_id": 133,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.726918079336684,
+      "accuracy": 0.726,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 3,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.726918079336684,
+      "f1_score": 0.726918079336684,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:08:19.645009"
+    },
+    {
+      "evaluation": 135,
+      "iteration": 13,
+      "particle_id": 134,
+      "learning_rate": 9.62592228537941e-05,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7053706925280592,
+      "accuracy": 0.705,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 4,
+      "position": [
+        9.62592228537941e-05,
+        0.0
+      ],
+      "score": 0.7053706925280592,
+      "f1_score": 0.7053706925280592,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 9.62592228537941e-05,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:08:36.287542"
+    },
+    {
+      "evaluation": 136,
+      "iteration": 13,
+      "particle_id": 135,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7153183897126318,
+      "accuracy": 0.714,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7153183897126318,
+      "f1_score": 0.7153183897126318,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:08:53.085937"
+    },
+    {
+      "evaluation": 137,
+      "iteration": 13,
+      "particle_id": 136,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7225228542117861,
+      "accuracy": 0.722,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7225228542117861,
+      "f1_score": 0.7225228542117861,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:09:09.950630"
+    },
+    {
+      "evaluation": 138,
+      "iteration": 13,
+      "particle_id": 137,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.25069535245334357,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.25069535245334357
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.25069535245334357,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:09:27.404098"
+    },
+    {
+      "evaluation": 139,
+      "iteration": 13,
+      "particle_id": 138,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7319188954867416,
+      "accuracy": 0.732,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7319188954867416,
+      "f1_score": 0.7319188954867416,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:09:44.807082"
+    },
+    {
+      "evaluation": 140,
+      "iteration": 13,
+      "particle_id": 139,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.17851541428468337,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.17851541428468337
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.17851541428468337,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:10:01.797212"
+    },
+    {
+      "evaluation": 141,
+      "iteration": 13,
+      "particle_id": 140,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7237053476722248,
+      "accuracy": 0.727,
+      "is_best": false
+    },
+    {
+      "iteration": 14,
+      "particle_id": 10,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7237053476722248,
+      "f1_score": 0.7237053476722248,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:10:20.738494"
+    },
+    {
+      "evaluation": 142,
+      "iteration": 14,
+      "particle_id": 141,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7333427893692213,
+      "accuracy": 0.732,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 1,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7333427893692213,
+      "f1_score": 0.7333427893692213,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:10:39.751244"
+    },
+    {
+      "evaluation": 143,
+      "iteration": 14,
+      "particle_id": 142,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.721947443800236,
+      "accuracy": 0.721,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 2,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.721947443800236,
+      "f1_score": 0.721947443800236,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:10:58.866961"
+    },
+    {
+      "evaluation": 144,
+      "iteration": 14,
+      "particle_id": 143,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.715511088559474,
+      "accuracy": 0.714,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 3,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.715511088559474,
+      "f1_score": 0.715511088559474,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:11:18.008008"
+    },
+    {
+      "evaluation": 145,
+      "iteration": 14,
+      "particle_id": 144,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7413912357778529,
+      "accuracy": 0.74,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 4,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7413912357778529,
+      "f1_score": 0.7413912357778529,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:11:36.923615"
+    },
+    {
+      "evaluation": 146,
+      "iteration": 14,
+      "particle_id": 145,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7017282142157116,
+      "accuracy": 0.702,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 5,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7017282142157116,
+      "f1_score": 0.7017282142157116,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:11:55.870886"
+    },
+    {
+      "evaluation": 147,
+      "iteration": 14,
+      "particle_id": 146,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7168441158198628,
+      "accuracy": 0.716,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 6,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7168441158198628,
+      "f1_score": 0.7168441158198628,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:12:15.040747"
+    },
+    {
+      "evaluation": 148,
+      "iteration": 14,
+      "particle_id": 147,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.10601716668087921,
+      "frozen_layers": 0,
+      "f1_score": 0.41024259020618564,
+      "accuracy": 0.554,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 7,
+      "position": [
+        1e-06,
+        0.10601716668087921
+      ],
+      "score": 0.41024259020618564,
+      "f1_score": 0.41024259020618564,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.10601716668087921,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:12:34.185939"
+    },
+    {
+      "evaluation": 149,
+      "iteration": 14,
+      "particle_id": 148,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0,
+      "frozen_layers": 0,
+      "f1_score": 0.7149198498419389,
+      "accuracy": 0.716,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 8,
+      "position": [
+        0.0001,
+        0.0
+      ],
+      "score": 0.7149198498419389,
+      "f1_score": 0.7149198498419389,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 0.0001,
+        "batch_size": 16,
+        "dropout": 0.0,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:12:52.357238"
+    },
+    {
+      "evaluation": 150,
+      "iteration": 14,
+      "particle_id": 149,
+      "learning_rate": 1e-06,
+      "batch_size": 16,
+      "dropout": 0.19070200171572124,
+      "frozen_layers": 0,
+      "f1_score": 0.44887977971087045,
+      "accuracy": 0.475,
+      "is_best": false
+    },
+    {
+      "iteration": 15,
+      "particle_id": 9,
+      "position": [
+        1e-06,
+        0.19070200171572124
+      ],
+      "score": 0.44887977971087045,
+      "f1_score": 0.44887977971087045,
+      "accuracy": 0.747,
+      "params": {
+        "learning_rate": 1e-06,
+        "batch_size": 16,
+        "dropout": 0.19070200171572124,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-17T17:13:10.503518"
+    },
+    {
+      "evaluation": 151,
+      "iteration": 14,
+      "particle_id": 150,
+      "learning_rate": 0.0001,
+      "batch_size": 16,
+      "dropout": 0.0006665561802643855,
+      "frozen_layers": 0,
+      "f1_score": 0.7083454095225394,
+      "accuracy": 0.707,
+      "is_best": false
+    }
+  ]
+}

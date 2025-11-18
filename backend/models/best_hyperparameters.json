@@ -1,8 +1,8 @@
 {
   "learning_rate": 0.0001,
-  "batch_size": 4,
-  "dropout": 0.32606428264886234,
+  "batch_size": 16,
+  "dropout": 0.0,
   "frozen_layers": 0,
-  "f1_score": 0.6846565722588352,
-  "accuracy": 0.688
+  "f1_score": 0.7471108028065921,
+  "accuracy": 0.747
 }

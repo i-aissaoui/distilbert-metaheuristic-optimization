@@ -1,0 +1,49 @@
+{
+  "total_particles": 3,
+  "particles": [
+    {
+      "evaluation": 1,
+      "iteration": 0,
+      "particle_id": 0,
+      "learning_rate": 5.05e-05,
+      "batch_size": 34,
+      "dropout": 0.25,
+      "frozen_layers": 3,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": true
+    },
+    {
+      "evaluation": 2,
+      "iteration": 0,
+      "particle_id": 1,
+      "learning_rate": 2.2245351200274298e-05,
+      "batch_size": 61,
+      "dropout": 0.17104344360849777,
+      "frozen_layers": 0,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "iteration": 1,
+      "particle_id": 1,
+      "position": [
+        2.2245351200274298e-05,
+        61.432512213373755,
+        0.17104344360849777,
+        0.8395247624333266
+      ],
+      "score": 0.4174558169103624,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "params": {
+        "learning_rate": 2.2245351200274298e-05,
+        "batch_size": 61,
+        "dropout": 0.17104344360849777,
+        "frozen_layers": 0
+      },
+      "timestamp": "2025-11-11T20:59:28.923255"
+    }
+  ]
+}

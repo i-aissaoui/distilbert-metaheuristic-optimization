@@ -15,13 +15,15 @@ interface PSOVisualizationProps {
 }
 
 export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisualizationProps) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
   const [selectedIteration, setSelectedIteration] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [fullscreenChart, setFullscreenChart] = useState<string | null>(null)
   const [playbackSpeed, setPlaybackSpeed] = useState(1000) // ms per iteration
 
   // Extract unique iterations
-  const iterations = [...new Set(psoAnimation.map(p => p.iteration))].sort((a, b) => a - b)
+  const iterations = Array.from(new Set(psoAnimation.map((p: any) => p.iteration))).sort((a: number, b: number) => a - b)
   const maxIteration = Math.max(...iterations, 0)
 
   // Get particles for selected iteration
@@ -97,6 +99,17 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
           </div>
         </div>
       </div>
+    )
+  }
+
+  if (!mounted) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>PSO Visualization</CardTitle>
+          <CardDescription>Loading…</CardDescription>
+        </CardHeader>
+      </Card>
     )
   }
 
@@ -203,7 +216,7 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
             <div>
               <CardTitle>🐝 Swarm Movement in Hyperparameter Space</CardTitle>
               <CardDescription>
-                Watch particles explore Learning Rate vs Batch Size • Iteration {selectedIteration}/{maxIteration}
+                Watch particles explore Learning Rate vs Dropout • Iteration {selectedIteration}/{maxIteration}
               </CardDescription>
             </div>
             <Button
@@ -224,17 +237,19 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                 type="number" 
                 dataKey="learning_rate" 
                 name="Learning Rate"
-                domain={['dataMin', 'dataMax']}
+                domain={[0, 0.0005]}
                 label={{ value: 'Learning Rate', position: 'insideBottom', offset: -20, style: { fontSize: 18, fontWeight: 'bold' } }}
                 tick={{ fontSize: 14 }}
+                tickFormatter={(value) => value.toExponential(2)}
               />
               <YAxis 
                 type="number" 
-                dataKey="batch_size" 
-                name="Batch Size"
-                domain={['dataMin', 'dataMax']}
-                label={{ value: 'Batch Size', angle: -90, position: 'insideLeft', style: { fontSize: 18, fontWeight: 'bold' } }}
+                dataKey="dropout" 
+                name="Dropout"
+                domain={[0, 0.5]}
+                label={{ value: 'Dropout', angle: -90, position: 'insideLeft', style: { fontSize: 18, fontWeight: 'bold' } }}
                 tick={{ fontSize: 14 }}
+                tickFormatter={(value) => value.toFixed(2)}
               />
               <Tooltip 
                 cursor={{ strokeDasharray: '3 3' }}
@@ -245,9 +260,9 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                       <div className="bg-white p-4 border-2 border-purple-400 rounded-lg shadow-2xl">
                         <p className="font-bold text-lg text-purple-900 mb-2">Particle {data.particle_id}</p>
                         <div className="space-y-1">
-                          <p className="text-sm"><span className="font-semibold">LR:</span> {data.learning_rate?.toExponential(3)}</p>
-                          <p className="text-sm"><span className="font-semibold">Batch:</span> {data.batch_size}</p>
+                          <p className="text-sm"><span className="font-semibold">Learning Rate:</span> {data.learning_rate?.toExponential(4)}</p>
                           <p className="text-sm"><span className="font-semibold">Dropout:</span> {data.dropout?.toFixed(3)}</p>
+                          <p className="text-sm"><span className="font-semibold">Batch Size:</span> {data.batch_size}</p>
                           <p className="text-sm"><span className="font-semibold">Frozen:</span> {data.frozen_layers}</p>
                           <p className="text-base font-bold text-purple-700 mt-2">F1: {(data.f1_score * 100).toFixed(2)}%</p>
                           {data.is_best && <p className="text-sm text-green-600 font-bold mt-2 flex items-center gap-1">⭐ BEST PARTICLE</p>}
@@ -285,6 +300,7 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
               <Scatter 
                 data={getCurrentIterationParticles()}
                 fill="#8884d8"
+                isAnimationActive={false}
               >
                 {getCurrentIterationParticles().map((entry, index) => {
                   // Calculate vibrant color based on F1 score
@@ -341,9 +357,13 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                 <div className="w-7 h-7 rounded-full bg-gray-400 opacity-50"></div>
                 <span className="font-medium">Trail (Previous)</span>
               </div>
+              <div className="text-xs text-center text-gray-500 mt-2">
+                <p>X-axis: Learning Rate (log scale)</p>
+                <p>Y-axis: Dropout Rate</p>
+              </div>
             </div>
             <div className="text-center text-base text-gray-700 bg-blue-50 p-3 rounded-lg border-2 border-blue-200">
-              💡 <span className="font-bold">Tip:</span> Click <span className="font-semibold text-green-600">Play</span> to watch particles move and converge toward the optimal solution!
+              💡 <span className="font-bold">Tip:</span> Watch how particles explore the learning rate and dropout space. The best configurations will have higher F1 scores (darker blue).
             </div>
           </div>
         </CardContent>
@@ -375,9 +395,9 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                   <XAxis dataKey="iteration" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="avg" stroke="#8b5cf6" strokeWidth={2} name="Average" />
-                  <Line type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
-                  <Line type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="avg" stroke="#8b5cf6" strokeWidth={2} name="Average" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -400,9 +420,9 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                   <XAxis dataKey="iteration" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="avg" stroke="#10b981" strokeWidth={2} name="Average" />
-                  <Line type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
-                  <Line type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="avg" stroke="#10b981" strokeWidth={2} name="Average" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -425,9 +445,9 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                   <XAxis dataKey="iteration" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="avg" stroke="#f59e0b" strokeWidth={2} name="Average" />
-                  <Line type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
-                  <Line type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="avg" stroke="#f59e0b" strokeWidth={2} name="Average" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -450,9 +470,9 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                   <XAxis dataKey="iteration" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="avg" stroke="#ec4899" strokeWidth={2} name="Average" />
-                  <Line type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
-                  <Line type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="avg" stroke="#ec4899" strokeWidth={2} name="Average" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="min" stroke="#3b82f6" strokeWidth={1} strokeDasharray="3 3" name="Min" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="3 3" name="Max" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -504,10 +524,10 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                   <XAxis dataKey="iteration" label={{ value: 'Iteration', position: 'insideBottom', offset: -5 }} />
                   <YAxis label={{ value: 'F1 Score', angle: -90, position: 'insideLeft' }} domain={[0, 1]} />
                   <Tooltip />
-                  <Area type="monotone" dataKey="min" fill="#fecaca" stroke="none" fillOpacity={0.3} name="Min" />
-                  <Area type="monotone" dataKey="avg" fill="#bfdbfe" stroke="none" fillOpacity={0.4} name="Avg Range" />
-                  <Line type="monotone" dataKey="best" stroke="#10b981" strokeWidth={3} dot={{ r: 5, fill: '#10b981' }} name="Best F1" />
-                  <Line type="monotone" dataKey="avg" stroke="#3b82f6" strokeWidth={2} strokeDasharray="5 5" name="Average F1" />
+                  <Area isAnimationActive={false} animationDuration={0} type="monotone" dataKey="min" fill="#fecaca" stroke="none" fillOpacity={0.3} name="Min" />
+                  <Area isAnimationActive={false} animationDuration={0} type="monotone" dataKey="avg" fill="#bfdbfe" stroke="none" fillOpacity={0.4} name="Avg Range" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="best" stroke="#10b981" strokeWidth={3} dot={{ r: 5, fill: '#10b981' }} name="Best F1" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="avg" stroke="#3b82f6" strokeWidth={2} strokeDasharray="5 5" name="Average F1" />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
@@ -536,7 +556,7 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                   <XAxis dataKey="iteration" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} label={{ value: 'Diversity', angle: -90, position: 'insideLeft', style: { fontSize: 11 } }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="diversity" stroke="#f59e0b" strokeWidth={2} name="Swarm Diversity" />
+                  <Line isAnimationActive={false} animationDuration={0} type="monotone" dataKey="diversity" stroke="#f59e0b" strokeWidth={2} name="Swarm Diversity" />
                 </LineChart>
               </ResponsiveContainer>
               <p className="text-xs text-gray-600 mt-2 text-center">
@@ -564,11 +584,12 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
               />
               <YAxis 
                 type="number" 
-                dataKey="batch_size" 
-                name="Batch Size"
-                domain={['dataMin', 'dataMax']}
-                label={{ value: 'Batch Size', angle: -90, position: 'insideLeft', style: { fontSize: 18, fontWeight: 'bold' } }}
+                dataKey="dropout" 
+                name="Dropout"
+                domain={[0, 0.5]}
+                label={{ value: 'Dropout', angle: -90, position: 'insideLeft', style: { fontSize: 18, fontWeight: 'bold' } }}
                 tick={{ fontSize: 14 }}
+                tickFormatter={(value) => (value as number).toFixed(2)}
               />
               <Tooltip 
                 cursor={{ strokeDasharray: '3 3' }}
@@ -602,12 +623,13 @@ export default function PSOVisualization({ psoHistory, psoAnimation }: PSOVisual
                     key={`trail-${trailIter}`}
                     data={trailParticles}
                     fill="#cbd5e1"
+                    isAnimationActive={false}
                   >
                     {trailParticles.map((entry, index) => (
                       <Cell 
                         key={`trail-cell-${index}`} 
-                        fill={`rgba(148, 163, 184, ${0.3 - trailIdx * 0.1})`}
-                        r={6}
+                        fill={`rgba(100, 116, 139, ${0.4 - trailIdx * 0.12})`}
+                        r={8}
                       />
                     ))}
                   </Scatter>

@@ -1,0 +1,16 @@
+{
+  "type": "bayesian_full_data",
+  "algorithm": "bayesian",
+  "completedAt": "2025-11-18T18:21:49.804539",
+  "accuracy": 0.788,
+  "f1_score": 0.7885,
+  "message": "Full data training with BAYESIAN parameters complete",
+  "parameters": {
+    "learning_rate": 8.033989678772208e-05,
+    "batch_size": 16,
+    "dropout": 0.020869425190585406,
+    "frozen_layers": 1,
+    "epochs": 3
+  },
+  "training_type": "full_data"
+}

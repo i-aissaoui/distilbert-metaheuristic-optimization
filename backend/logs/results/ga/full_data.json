@@ -1,0 +1,16 @@
+{
+  "type": "ga_full_data",
+  "algorithm": "ga",
+  "completedAt": "2025-11-18T11:33:02.018479",
+  "accuracy": 0.779,
+  "f1_score": 0.7787,
+  "message": "Full data training with GA parameters complete",
+  "parameters": {
+    "learning_rate": 7.006026332764393e-05,
+    "batch_size": 16,
+    "dropout": 0.02571223826288365,
+    "frozen_layers": 1,
+    "epochs": 3
+  },
+  "training_type": "full_data"
+}

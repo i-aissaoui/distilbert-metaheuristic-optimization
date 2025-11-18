@@ -11,6 +11,26 @@
 
 This system demonstrates advanced optimization techniques for deep learning hyperparameter tuning. It compares **Particle Swarm Optimization (PSO)**, **Genetic Algorithms (GA)**, and **Bayesian Optimization** on a DistilBERT text classification task. Features include FastAPI backend with GPU acceleration and a modern Next.js frontend with real-time algorithm visualizations.
 
+## 🧭 Approach
+
+- **Goal**: Find strong hyperparameters for DistilBERT using three algorithms (PSO, GA, Bayesian) and compare them side-by-side.
+- **Speed vs. Quality**: To iterate fast, optimization runs are executed on a **subset of the training data (20%)**. This drastically reduces turnaround time while preserving relative ranking among configurations.
+- **Full-Data Retraining**: After an algorithm finishes, you can retrain a final model on **100% of the data** using the best hyperparameters it found. This provides fair, production-quality metrics.
+- **Search Space**: Expanded ranges are used for broader exploration:
+  - Learning Rate: `[1e-6, 1e-4]`
+  - Batch Size: `[4, 64]`
+  - Dropout: `[0.0, 0.5]`
+  - Frozen Layers: `[0, 6]`
+- **Parameter Selection (Frontend)**:
+  - For each hyperparameter, choose to keep it **Optimized** (search) or **Fixed** (set explicit value).
+  - Choices persist via the backend in `backend/config/optimization_config.json` and are restored on refresh.
+- **Algorithm Runtime Settings**:
+  - PSO: `swarmsize`, `maxiter`
+  - GA: `population_size`, `num_generations`
+  - Bayesian: `n_trials`
+  - These settings persist in `backend/logs/settings/algorithm_settings.json`.
+- **UI Messaging**: The Training page indicates when results were obtained on **20% of data** and when full-data training is completed on **100%**.
+
 ### Key Features
 
 **🔬 Optimization Algorithms**
@@ -51,7 +71,7 @@ This system demonstrates advanced optimization techniques for deep learning hype
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/distilbert-metaheuristic-optimization.git
+git clone https://github.com/i-aissaoui/distilbert-metaheuristic-optimization.git
 cd distilbert-metaheuristic-optimization
 ```
 
@@ -98,7 +118,7 @@ npm run dev
 ### Quick Start with Docker
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/distilbert-metaheuristic-optimization.git
+git clone https://github.com/i-aissaoui/distilbert-metaheuristic-optimization.git
 cd distilbert-metaheuristic-optimization
 
 # Build and run with Docker Compose
@@ -555,6 +575,6 @@ MIT License - see [LICENSE](LICENSE) file
 
 **Built with ❤️ using state-of-the-art NLP and optimization techniques**
 
-[Report Bug](../../issues) · [Request Feature](../../issues)
+[Report Bug](https://github.com/i-aissaoui/distilbert-metaheuristic-optimization/issues) · [Request Feature](https://github.com/i-aissaoui/distilbert-metaheuristic-optimization/issues)
 
 </div>

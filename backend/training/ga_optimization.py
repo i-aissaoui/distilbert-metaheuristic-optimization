@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 class GAOptimizer:
     """Genetic Algorithm-based hyperparameter optimizer for DistilBERT."""
     
-    def __init__(self, train_dataset, val_dataset, num_epochs=1, log_dir=None):
+    def __init__(self, train_dataset, val_dataset, num_epochs=1, log_dir=None, optimize_mask=None, fixed_values=None):
         self.train_dataset = train_dataset
         self.val_dataset = val_dataset
         self.num_epochs = num_epochs
@@ -40,6 +40,8 @@ class GAOptimizer:
         self.best_score = 0
         self.best_params = None
         self.generation = 0
+        # Track last evaluated individual's metrics (primary latest values)
+        self.last_metrics = {"f1": 0.0, "accuracy": 0.0}
         
         # Real-time tracking
         self.history = []
@@ -57,6 +59,22 @@ class GAOptimizer:
             'frozen_layers': (0, 6)
         }
         
+        # Optimization config
+        self.param_names = ['learning_rate', 'batch_size', 'dropout', 'frozen_layers']
+        default_fixed = {
+            'learning_rate': 2e-5,
+            'batch_size': 16,
+            'dropout': 0.1,
+            'frozen_layers': 0,
+        }
+        self.optimize_mask = optimize_mask or {
+            'learning_rate': True,
+            'batch_size': True,
+            'dropout': True,
+            'frozen_layers': True,
+        }
+        self.fixed_values = {**default_fixed, **(fixed_values or {})}
+
         # Setup DEAP
         self._setup_deap()
     
@@ -108,19 +126,40 @@ class GAOptimizer:
         """
         self.individual_count += 1
         
-        # Parse parameters
-        learning_rate = individual[0]
-        batch_size = max(4, int(round(individual[1])))  # Ensure batch_size >= 4
-        dropout = individual[2]
-        frozen_layers = int(round(individual[3]))
+        # Parse parameters with optimize/fixed handling
+        # First, clamp raw genes to bounds to avoid invalid values from crossover
+        lr_gene = float(individual[0])
+        bs_gene = int(round(individual[1]))
+        dr_gene = float(individual[2])
+        fr_gene = int(round(individual[3]))
+
+        # Clamp to bounds
+        lr_min, lr_max = self.bounds['learning_rate']
+        bs_min, bs_max = self.bounds['batch_size']
+        dr_min, dr_max = self.bounds['dropout']
+        fl_min, fl_max = self.bounds['frozen_layers']
+
+        lr_gene = max(lr_min, min(lr_max, lr_gene))
+        bs_gene = max(int(bs_min), min(int(bs_max), bs_gene))
+        dr_gene = max(dr_min, min(dr_max, dr_gene))
+        fr_gene = max(int(fl_min), min(int(fl_max), fr_gene))
+
+        learning_rate = lr_gene if self.optimize_mask.get('learning_rate', True) else float(self.fixed_values['learning_rate'])
+        batch_size = max(4, bs_gene) if self.optimize_mask.get('batch_size', True) else int(self.fixed_values['batch_size'])
+        dropout = dr_gene if self.optimize_mask.get('dropout', True) else float(self.fixed_values['dropout'])
+        frozen_layers = fr_gene if self.optimize_mask.get('frozen_layers', True) else int(self.fixed_values['frozen_layers'])
         
         logger.info(f"\n{'='*60}")
         logger.info(f"GA Generation {self.generation} - Individual {self.individual_count}")
         logger.info(f"{'='*60}")
-        logger.info(f"Learning Rate: {learning_rate:.6f}")
-        logger.info(f"Batch Size: {batch_size}")
-        logger.info(f"Dropout: {dropout:.3f}")
-        logger.info(f"Frozen Layers: {frozen_layers}")
+        lr_mode = "optimized" if self.optimize_mask.get('learning_rate', True) else f"fixed ({self.fixed_values.get('learning_rate')})"
+        bs_mode = "optimized" if self.optimize_mask.get('batch_size', True) else f"fixed ({self.fixed_values.get('batch_size')})"
+        dr_mode = "optimized" if self.optimize_mask.get('dropout', True) else f"fixed ({self.fixed_values.get('dropout')})"
+        fr_mode = "optimized" if self.optimize_mask.get('frozen_layers', True) else f"fixed ({self.fixed_values.get('frozen_layers')})"
+        logger.info(f"Learning Rate: {learning_rate:.6f} [{lr_mode}]")
+        logger.info(f"Batch Size: {batch_size} [{bs_mode}]")
+        logger.info(f"Dropout: {dropout:.3f} [{dr_mode}]")
+        logger.info(f"Frozen Layers: {frozen_layers} [{fr_mode}]")
         
         try:
             # Validate datasets have proper tokenizer (fix corruption issue)
@@ -169,6 +208,9 @@ class GAOptimizer:
             # Ensure f1_score is a float
             f1_score = float(metrics.get('f1_weighted', 0))
             accuracy = float(metrics.get('accuracy', 0))
+
+            # Always record last evaluated individual's metrics
+            self.last_metrics = {"f1": f1_score, "accuracy": accuracy}
             
             logger.info(f"F1 Score: {f1_score:.4f}")
             logger.info(f"Accuracy: {accuracy:.4f}")
@@ -227,7 +269,7 @@ class GAOptimizer:
     
     def mutate_individual(self, individual):
         """
-        Mutate an individual with bounds checking.
+        Mutate an individual with bounds checking and error handling.
         
         Args:
             individual: Individual to mutate
@@ -235,23 +277,50 @@ class GAOptimizer:
         Returns:
             Tuple with mutated individual
         """
-        # Mutation probability for each gene
-        mutation_prob = 0.2
-        
-        for i in range(len(individual)):
-            if random.random() < mutation_prob:
-                if i == 0:  # learning_rate
-                    individual[i] += random.gauss(0, (self.bounds['learning_rate'][1] - self.bounds['learning_rate'][0]) * 0.1)
-                    individual[i] = max(self.bounds['learning_rate'][0], min(self.bounds['learning_rate'][1], individual[i]))
-                elif i == 1:  # batch_size
-                    individual[i] += random.randint(-4, 4)
-                    individual[i] = max(self.bounds['batch_size'][0], min(self.bounds['batch_size'][1], individual[i]))
-                elif i == 2:  # dropout
-                    individual[i] += random.gauss(0, (self.bounds['dropout'][1] - self.bounds['dropout'][0]) * 0.1)
-                    individual[i] = max(self.bounds['dropout'][0], min(self.bounds['dropout'][1], individual[i]))
-                elif i == 3:  # frozen_layers
-                    individual[i] += random.randint(-1, 1)
-                    individual[i] = max(self.bounds['frozen_layers'][0], min(self.bounds['frozen_layers'][1], individual[i]))
+        try:
+            # Get parameter bounds with safety checks
+            lr_min, lr_max = self.bounds.get('learning_rate', (1e-6, 1e-4))
+            bs_min, bs_max = self.bounds.get('batch_size', (4, 64))
+            dr_min, dr_max = self.bounds.get('dropout', (0.0, 0.5))
+            fl_min, fl_max = self.bounds.get('frozen_layers', (0, 6))
+            
+            # Ensure individual has the correct number of genes
+            if len(individual) < 4:
+                logger.warning(f"Individual has incorrect number of genes: {len(individual)}")
+                return individual,
+            
+            # Apply mutation with bounds checking and validation
+            try:
+                if self.optimize_mask.get('learning_rate', True):
+                    individual[0] = max(lr_min, min(lr_max, individual[0] * random.uniform(0.8, 1.2)))
+                    individual[0] = float(individual[0])  # Ensure it's a float
+                
+                if self.optimize_mask.get('batch_size', True):
+                    new_bs = int(individual[1] * random.uniform(0.8, 1.2))
+                    individual[1] = max(bs_min, min(bs_max, new_bs))
+                    individual[1] = int(individual[1])  # Ensure it's an int
+                
+                if self.optimize_mask.get('dropout', True):
+                    individual[2] = max(dr_min, min(dr_max, individual[2] * random.uniform(0.8, 1.2)))
+                    individual[2] = float(individual[2])  # Ensure it's a float
+                
+                if self.optimize_mask.get('frozen_layers', True):
+                    fl = int(individual[3]) + random.choice([-1, 0, 1])
+                    individual[3] = max(fl_min, min(fl_max, fl))
+                    individual[3] = int(individual[3])  # Ensure it's an int
+                
+                logger.debug(f"Mutated individual to: {individual}")
+                return individual,
+                
+            except (ValueError, TypeError) as ve:
+                logger.error(f"Value error during mutation: {ve}")
+                # Return a new random individual if mutation fails
+                return self.toolbox.individual(),
+                
+        except Exception as e:
+            logger.error(f"Unexpected error in mutation: {str(e)}")
+            # Return a new random individual if something goes wrong
+            return self.toolbox.individual(),
         
         return (individual,)
     
@@ -319,6 +388,10 @@ class GAOptimizer:
         logger.info(f"  Batch Size: {self.bounds['batch_size']}")
         logger.info(f"  Dropout: {self.bounds['dropout']}")
         logger.info(f"  Frozen Layers: {self.bounds['frozen_layers']}")
+        logger.info("Starting Parameter Modes:")
+        for name in self.param_names:
+            mode_str = "optimized" if self.optimize_mask.get(name, True) else f"fixed ({self.fixed_values.get(name)})"
+            logger.info(f"Starting - {name}: {mode_str}")
         
         # Create initial status file IMMEDIATELY
         ga_results_dir = self.log_dir / "results" / "ga"
@@ -353,11 +426,28 @@ class GAOptimizer:
             logger.info(f"Generation {gen + 1}/{num_generations}")
             logger.info(f"{'#'*60}")
             
-            # Evaluate population
-            fitnesses = list(map(self.toolbox.evaluate, population))
-            for ind, fit in zip(population, fitnesses):
-                ind.fitness.values = fit
-            
+            # Evaluate the entire population with better error handling
+            try:
+                fitnesses = []
+                for ind in population:
+                    try:
+                        fit = self.toolbox.evaluate(ind)
+                        fitnesses.append(fit)
+                    except Exception as e:
+                        logger.error(f"Error evaluating individual {ind}: {str(e)}")
+                        # Assign a very low fitness to failed evaluations
+                        fitnesses.append((0.0,))
+                
+                # Assign fitnesses to individuals
+                for ind, fit in zip(population, fitnesses):
+                    ind.fitness.values = fit
+                    
+            except Exception as e:
+                logger.error(f"Critical error in population evaluation: {str(e)}")
+                # Assign minimum fitness to all individuals to continue
+                for ind in population:
+                    ind.fitness.values = (0.0,)
+                    
             # Log statistics
             record = stats.compile(population)
             logger.info(f"Generation {gen + 1} Stats:")
@@ -392,12 +482,39 @@ class GAOptimizer:
                     self.toolbox.mate(child1, child2)
                     del child1.fitness.values
                     del child2.fitness.values
-            
+
+            # Enforce bounds after crossover
+            for ind in offspring:
+                try:
+                    # learning_rate
+                    ind[0] = float(max(self.bounds['learning_rate'][0], min(self.bounds['learning_rate'][1], ind[0])))
+                    # batch_size (int)
+                    ind[1] = int(max(self.bounds['batch_size'][0], min(self.bounds['batch_size'][1], round(ind[1]))))
+                    # dropout
+                    ind[2] = float(max(self.bounds['dropout'][0], min(self.bounds['dropout'][1], ind[2])))
+                    # frozen_layers (int)
+                    ind[3] = int(max(self.bounds['frozen_layers'][0], min(self.bounds['frozen_layers'][1], round(ind[3]))))
+                except Exception:
+                    # If anything goes wrong, regenerate a valid individual
+                    new_ind = self.toolbox.individual()
+                    ind[:] = new_ind[:]
+
             # Apply mutation
             for mutant in offspring:
                 if random.random() < mutation_prob:
                     self.toolbox.mutate(mutant)
                     del mutant.fitness.values
+
+            # Final bounds enforcement after mutation
+            for ind in offspring:
+                try:
+                    ind[0] = float(max(self.bounds['learning_rate'][0], min(self.bounds['learning_rate'][1], ind[0])))
+                    ind[1] = int(max(self.bounds['batch_size'][0], min(self.bounds['batch_size'][1], round(ind[1]))))
+                    ind[2] = float(max(self.bounds['dropout'][0], min(self.bounds['dropout'][1], ind[2])))
+                    ind[3] = int(max(self.bounds['frozen_layers'][0], min(self.bounds['frozen_layers'][1], round(ind[3]))))
+                except Exception:
+                    new_ind = self.toolbox.individual()
+                    ind[:] = new_ind[:]
             
             # Replace population
             population[:] = offspring
@@ -410,7 +527,8 @@ class GAOptimizer:
             'progress': 100,
             'generation': num_generations,
             'message': '✅ GA optimization completed successfully!',
-            'best_score': float(self.best_score)
+            'best_score': float(self.best_score),
+            'best_accuracy': float(self.best_params.get('accuracy', 0)) if self.best_params else 0.0
         }
         with open(ga_results_dir / 'status.json', 'w') as f:
             json.dump(completion_status, f, indent=2)
@@ -424,10 +542,17 @@ class GAOptimizer:
         logger.info("Genetic Algorithm Optimization Complete!")
         logger.info("="*60)
         logger.info(f"Best F1 Score: {self.best_score:.4f}")
+        logger.info(f"Best Accuracy: {float(self.best_params.get('accuracy', 0)):.4f}")
         logger.info(f"⏱️  Total optimization time: {optimization_time/60:.2f} minutes ({optimization_time:.1f} seconds)")
         logger.info(f"Best Configuration:")
         for key, value in self.best_params.items():
             logger.info(f"  {key}: {value}")
+        # Explicit single-line result for terminal filters
+        logger.info(
+            f"GA RESULT -> F1: {self.best_score:.4f}, Acc: {float(self.best_params.get('accuracy', 0)):.4f}, "
+            f"Params: lr={self.best_params.get('learning_rate')}, bs={self.best_params.get('batch_size')}, "
+            f"dropout={self.best_params.get('dropout')}, frozen={self.best_params.get('frozen_layers')}"
+        )
         
         # Save final status
         final_status = {
@@ -448,20 +573,33 @@ class GAOptimizer:
         latest_result = {
             'type': 'ga',
             'completedAt': datetime.now().isoformat(),
-            'accuracy': float(self.best_params.get('accuracy', 0)),
-            'f1_score': float(self.best_score),
+            'accuracy': float(self.last_metrics.get('accuracy', 0.0)),
+            'f1_score': float(self.last_metrics.get('f1', 0.0)),
             'message': f'GA Optimization completed - Best F1: {self.best_score:.4f}',
             'best_params': self.best_params,
             'optimization_params': {
                 'population_size': population_size,
                 'num_generations': num_generations
             },
-            'training_time': float(optimization_time)  # in seconds
+            'training_time': float(optimization_time),  # in seconds
+            'parameter_selection': {
+                'optimize': self.optimize_mask,
+                'fixed': self.fixed_values
+            },
+            # Placeholders indicating 100% full-data training not yet performed
+            'full_data_f1_score': 0.0,
+            'full_data_accuracy': 0.0,
+            # Also include best-of-run for reference
+            'best_score': float(self.best_score)
         }
         latest_file = ga_results_dir / "latest.json"
         with open(latest_file, 'w') as f:
             json.dump(latest_result, f, indent=2)
         logger.info(f"✅ Saved GA results to latest.json")
+        # Final explicit saved line
+        logger.info(
+            f"GA SAVED -> latest.json | Best F1: {self.best_score:.4f}, Acc: {float(self.best_params.get('accuracy', 0)):.4f}"
+        )
         
         return self.best_params
 
@@ -485,7 +623,7 @@ def run_ga_optimization():
     logger.info(f"Num Generations: {NUM_GENERATIONS}")
     
     logger.info("Loading dataset...")
-    SUBSET_FRACTION = 0.05  # Use only 5% of data for training to show accuracy gap
+    SUBSET_FRACTION = 0.20  # Use 10% of data for training
     
     # Load tokenizer
     from transformers import DistilBertTokenizer
@@ -509,10 +647,52 @@ def run_ga_optimization():
     logger.info(f"Train size: {len(train_dataset_subset)}, Val size: {len(val_dataset_full)}")
     
     logger.info("Initializing GA optimizer...")
+    # Load optimization config (new path with legacy fallback)
+    config_path = Path(__file__).parent.parent / "config" / "optimization_config.json"
+    legacy_config_path = Path(__file__).parent.parent / "logs" / "settings" / "optimization_config.json"
+    optimize = {
+        'learning_rate': True,
+        'batch_size': True,
+        'dropout': True,
+        'frozen_layers': True,
+    }
+    fixed = {
+        'learning_rate': 2e-5,
+        'batch_size': 16,
+        'dropout': 0.1,
+        'frozen_layers': 0,
+    }
+    try:
+        loaded = None
+        if config_path.exists():
+            with open(config_path, 'r') as f:
+                loaded = json.load(f)
+        elif legacy_config_path.exists():
+            with open(legacy_config_path, 'r') as f:
+                loaded = json.load(f)
+        if loaded:
+            data = loaded
+            fixed_keys_cfg = set()
+            if isinstance(data.get('fixed'), dict):
+                for k, v in data['fixed'].items():
+                    if v is not None:
+                        fixed[k] = v
+                        fixed_keys_cfg.add(k)
+            if isinstance(data.get('optimize'), dict):
+                for k, v in data['optimize'].items():
+                    if v is not None:
+                        optimize[k] = bool(v)
+            for name in fixed_keys_cfg:
+                optimize[name] = False
+    except Exception as e:
+        logger.warning(f"Could not load optimization config: {e}")
+
     optimizer = GAOptimizer(
         train_dataset=train_dataset_subset,
         val_dataset=val_dataset_full,
-        num_epochs=NUM_EPOCHS
+        num_epochs=NUM_EPOCHS,
+        optimize_mask=optimize,
+        fixed_values=fixed
     )
     
     logger.info("Starting optimization...")

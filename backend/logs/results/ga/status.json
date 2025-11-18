@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "generation": 14,
+  "best_score": 0.7330335083284724,
+  "best_params": {
+    "learning_rate": 7.006026332764393e-05,
+    "batch_size": 16,
+    "dropout": 0.02571223826288365,
+    "frozen_layers": 1,
+    "f1_score": 0.7330335083284724,
+    "accuracy": 0.732
+  },
+  "total_individuals": 150,
+  "total_generations": 15
+}

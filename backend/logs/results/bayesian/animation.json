@@ -1,0 +1,504 @@
+{
+  "data": [
+    {
+      "trial": 1,
+      "learning_rate": 5.611516415334504e-06,
+      "batch_size": 16,
+      "dropout": 0.4753571532049581,
+      "frozen_layers": 1,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": true
+    },
+    {
+      "trial": 2,
+      "learning_rate": 2.9106359131330718e-05,
+      "batch_size": 16,
+      "dropout": 0.2993292420985183,
+      "frozen_layers": 1,
+      "f1_score": 0.6699190195595747,
+      "accuracy": 0.673,
+      "is_best": true
+    },
+    {
+      "trial": 3,
+      "learning_rate": 2.05133826308745e-06,
+      "batch_size": 16,
+      "dropout": 0.07799726016810132,
+      "frozen_layers": 1,
+      "f1_score": 0.6578192844147968,
+      "accuracy": 0.664,
+      "is_best": false
+    },
+    {
+      "trial": 4,
+      "learning_rate": 1.306673923805328e-06,
+      "batch_size": 16,
+      "dropout": 0.4330880728874676,
+      "frozen_layers": 1,
+      "f1_score": 0.5029825672879983,
+      "accuracy": 0.586,
+      "is_best": false
+    },
+    {
+      "trial": 5,
+      "learning_rate": 1.5930522616241016e-05,
+      "batch_size": 16,
+      "dropout": 0.35403628889802274,
+      "frozen_layers": 1,
+      "f1_score": 0.6604458464773922,
+      "accuracy": 0.672,
+      "is_best": false
+    },
+    {
+      "trial": 6,
+      "learning_rate": 1.0994335574766194e-06,
+      "batch_size": 16,
+      "dropout": 0.48495492608099716,
+      "frozen_layers": 1,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "trial": 7,
+      "learning_rate": 4.6225890010208326e-05,
+      "batch_size": 16,
+      "dropout": 0.10616955533913808,
+      "frozen_layers": 1,
+      "f1_score": 0.7055040225829219,
+      "accuracy": 0.704,
+      "is_best": true
+    },
+    {
+      "trial": 8,
+      "learning_rate": 2.310201887845294e-06,
+      "batch_size": 16,
+      "dropout": 0.09170225492671691,
+      "frozen_layers": 1,
+      "f1_score": 0.4174558169103624,
+      "accuracy": 0.573,
+      "is_best": false
+    },
+    {
+      "trial": 9,
+      "learning_rate": 4.0596116104843085e-06,
+      "batch_size": 16,
+      "dropout": 0.2623782158161189,
+      "frozen_layers": 1,
+      "f1_score": 0.4294121401252963,
+      "accuracy": 0.576,
+      "is_best": false
+    },
+    {
+      "trial": 10,
+      "learning_rate": 7.30953983591291e-06,
+      "batch_size": 16,
+      "dropout": 0.14561457009902096,
+      "frozen_layers": 1,
+      "f1_score": 0.43260003672285263,
+      "accuracy": 0.579,
+      "is_best": false
+    },
+    {
+      "trial": 11,
+      "learning_rate": 9.036331363174524e-05,
+      "batch_size": 16,
+      "dropout": 0.0029985914779085687,
+      "frozen_layers": 1,
+      "f1_score": 0.7025010356327891,
+      "accuracy": 0.701,
+      "is_best": false
+    },
+    {
+      "trial": 12,
+      "learning_rate": 8.691089486124968e-05,
+      "batch_size": 16,
+      "dropout": 0.0026485604069959668,
+      "frozen_layers": 1,
+      "f1_score": 0.7319188954867416,
+      "accuracy": 0.732,
+      "is_best": true
+    },
+    {
+      "trial": 13,
+      "learning_rate": 9.233550925536604e-05,
+      "batch_size": 16,
+      "dropout": 0.17193377205650742,
+      "frozen_layers": 1,
+      "f1_score": 0.6906185576530269,
+      "accuracy": 0.689,
+      "is_best": false
+    },
+    {
+      "trial": 14,
+      "learning_rate": 4.348734921635035e-05,
+      "batch_size": 16,
+      "dropout": 0.006506620036291724,
+      "frozen_layers": 1,
+      "f1_score": 0.6815614830740976,
+      "accuracy": 0.681,
+      "is_best": false
+    },
+    {
+      "trial": 15,
+      "learning_rate": 3.94007866237795e-05,
+      "batch_size": 16,
+      "dropout": 0.1898021217101117,
+      "frozen_layers": 1,
+      "f1_score": 0.6803235250364464,
+      "accuracy": 0.681,
+      "is_best": false
+    },
+    {
+      "trial": 16,
+      "learning_rate": 1.7579396346774566e-05,
+      "batch_size": 16,
+      "dropout": 0.07057721457964028,
+      "frozen_layers": 1,
+      "f1_score": 0.6662103125755098,
+      "accuracy": 0.669,
+      "is_best": false
+    },
+    {
+      "trial": 17,
+      "learning_rate": 5.715443913794706e-05,
+      "batch_size": 16,
+      "dropout": 0.0497403346707179,
+      "frozen_layers": 1,
+      "f1_score": 0.6830266017713236,
+      "accuracy": 0.691,
+      "is_best": false
+    },
+    {
+      "trial": 18,
+      "learning_rate": 1.972137753114702e-05,
+      "batch_size": 16,
+      "dropout": 0.12003329156932674,
+      "frozen_layers": 1,
+      "f1_score": 0.688310877749158,
+      "accuracy": 0.69,
+      "is_best": false
+    },
+    {
+      "trial": 19,
+      "learning_rate": 6.569054616369346e-05,
+      "batch_size": 16,
+      "dropout": 0.2060269893485771,
+      "frozen_layers": 1,
+      "f1_score": 0.6929538742690806,
+      "accuracy": 0.693,
+      "is_best": false
+    },
+    {
+      "trial": 20,
+      "learning_rate": 2.7767734505739698e-05,
+      "batch_size": 16,
+      "dropout": 0.028112175950025187,
+      "frozen_layers": 1,
+      "f1_score": 0.6965164608700652,
+      "accuracy": 0.695,
+      "is_best": false
+    },
+    {
+      "trial": 21,
+      "learning_rate": 1.1076436134219963e-05,
+      "batch_size": 16,
+      "dropout": 0.12040396875045506,
+      "frozen_layers": 1,
+      "f1_score": 0.666365439072366,
+      "accuracy": 0.675,
+      "is_best": false
+    },
+    {
+      "trial": 22,
+      "learning_rate": 9.889142124033119e-05,
+      "batch_size": 16,
+      "dropout": 0.010380266828211906,
+      "frozen_layers": 1,
+      "f1_score": 0.6814208603896105,
+      "accuracy": 0.688,
+      "is_best": false
+    },
+    {
+      "trial": 23,
+      "learning_rate": 6.722948574293641e-05,
+      "batch_size": 16,
+      "dropout": 0.05037104492358009,
+      "frozen_layers": 1,
+      "f1_score": 0.6787190993853879,
+      "accuracy": 0.689,
+      "is_best": false
+    },
+    {
+      "trial": 24,
+      "learning_rate": 4.380015121626038e-05,
+      "batch_size": 16,
+      "dropout": 0.00392323856311544,
+      "frozen_layers": 1,
+      "f1_score": 0.6970723495353475,
+      "accuracy": 0.696,
+      "is_best": false
+    },
+    {
+      "trial": 25,
+      "learning_rate": 9.645803792234547e-05,
+      "batch_size": 16,
+      "dropout": 0.09257612195969363,
+      "frozen_layers": 1,
+      "f1_score": 0.7068024203714599,
+      "accuracy": 0.706,
+      "is_best": false
+    },
+    {
+      "trial": 26,
+      "learning_rate": 2.896546047003602e-05,
+      "batch_size": 16,
+      "dropout": 0.11200057483144389,
+      "frozen_layers": 1,
+      "f1_score": 0.6969544752558027,
+      "accuracy": 0.697,
+      "is_best": false
+    },
+    {
+      "trial": 27,
+      "learning_rate": 6.666948491019213e-05,
+      "batch_size": 16,
+      "dropout": 0.23241701661977224,
+      "frozen_layers": 1,
+      "f1_score": 0.678759097489143,
+      "accuracy": 0.682,
+      "is_best": false
+    },
+    {
+      "trial": 28,
+      "learning_rate": 4.874838174739168e-05,
+      "batch_size": 16,
+      "dropout": 0.15501861355280072,
+      "frozen_layers": 1,
+      "f1_score": 0.6848072437871892,
+      "accuracy": 0.687,
+      "is_best": false
+    },
+    {
+      "trial": 29,
+      "learning_rate": 7.563325270324476e-05,
+      "batch_size": 16,
+      "dropout": 0.05222116554995776,
+      "frozen_layers": 1,
+      "f1_score": 0.7032778782399034,
+      "accuracy": 0.702,
+      "is_best": false
+    },
+    {
+      "trial": 30,
+      "learning_rate": 3.4189681023116475e-05,
+      "batch_size": 16,
+      "dropout": 0.2924290221607019,
+      "frozen_layers": 1,
+      "f1_score": 0.6833508704061896,
+      "accuracy": 0.685,
+      "is_best": false
+    },
+    {
+      "trial": 31,
+      "learning_rate": 2.175711542337584e-05,
+      "batch_size": 16,
+      "dropout": 0.3758067124078944,
+      "frozen_layers": 1,
+      "f1_score": 0.6615732303732305,
+      "accuracy": 0.672,
+      "is_best": false
+    },
+    {
+      "trial": 32,
+      "learning_rate": 7.552348116019383e-05,
+      "batch_size": 16,
+      "dropout": 0.04728067719079018,
+      "frozen_layers": 1,
+      "f1_score": 0.7205924117587224,
+      "accuracy": 0.72,
+      "is_best": false
+    },
+    {
+      "trial": 33,
+      "learning_rate": 5.590660091301143e-05,
+      "batch_size": 16,
+      "dropout": 0.09520824353247791,
+      "frozen_layers": 1,
+      "f1_score": 0.6963574548151825,
+      "accuracy": 0.697,
+      "is_best": false
+    },
+    {
+      "trial": 34,
+      "learning_rate": 9.864704399412081e-05,
+      "batch_size": 16,
+      "dropout": 0.043747369696014116,
+      "frozen_layers": 1,
+      "f1_score": 0.7299346263326029,
+      "accuracy": 0.732,
+      "is_best": false
+    },
+    {
+      "trial": 35,
+      "learning_rate": 7.77929420329184e-05,
+      "batch_size": 16,
+      "dropout": 0.041471460025845605,
+      "frozen_layers": 1,
+      "f1_score": 0.7012966587435849,
+      "accuracy": 0.701,
+      "is_best": false
+    },
+    {
+      "trial": 36,
+      "learning_rate": 9.627899267759345e-05,
+      "batch_size": 16,
+      "dropout": 0.07323683820427282,
+      "frozen_layers": 1,
+      "f1_score": 0.6965523084501546,
+      "accuracy": 0.695,
+      "is_best": false
+    },
+    {
+      "trial": 37,
+      "learning_rate": 1.3064855817350293e-05,
+      "batch_size": 16,
+      "dropout": 0.06977915169784507,
+      "frozen_layers": 1,
+      "f1_score": 0.6747018275001281,
+      "accuracy": 0.673,
+      "is_best": false
+    },
+    {
+      "trial": 38,
+      "learning_rate": 5.590828646285268e-05,
+      "batch_size": 16,
+      "dropout": 0.13752031840619197,
+      "frozen_layers": 1,
+      "f1_score": 0.6899128492174799,
+      "accuracy": 0.692,
+      "is_best": false
+    },
+    {
+      "trial": 39,
+      "learning_rate": 4.162669127862207e-06,
+      "batch_size": 16,
+      "dropout": 0.029896582624264513,
+      "frozen_layers": 1,
+      "f1_score": 0.41971670114860526,
+      "accuracy": 0.574,
+      "is_best": false
+    },
+    {
+      "trial": 40,
+      "learning_rate": 3.3689517403285745e-05,
+      "batch_size": 16,
+      "dropout": 0.42982493759777574,
+      "frozen_layers": 1,
+      "f1_score": 0.6866766172245089,
+      "accuracy": 0.689,
+      "is_best": false
+    },
+    {
+      "trial": 41,
+      "learning_rate": 7.743297783197872e-05,
+      "batch_size": 16,
+      "dropout": 0.08586485323427043,
+      "frozen_layers": 1,
+      "f1_score": 0.6944384505356569,
+      "accuracy": 0.698,
+      "is_best": false
+    },
+    {
+      "trial": 42,
+      "learning_rate": 5.262857925282981e-05,
+      "batch_size": 16,
+      "dropout": 0.10664166781556109,
+      "frozen_layers": 1,
+      "f1_score": 0.692503784270597,
+      "accuracy": 0.704,
+      "is_best": false
+    },
+    {
+      "trial": 43,
+      "learning_rate": 7.964938243344423e-05,
+      "batch_size": 16,
+      "dropout": 0.02514751016866698,
+      "frozen_layers": 1,
+      "f1_score": 0.7321709547764099,
+      "accuracy": 0.731,
+      "is_best": true
+    },
+    {
+      "trial": 44,
+      "learning_rate": 8.033989678772208e-05,
+      "batch_size": 16,
+      "dropout": 0.020869425190585406,
+      "frozen_layers": 1,
+      "f1_score": 0.7365724192589658,
+      "accuracy": 0.738,
+      "is_best": true
+    },
+    {
+      "trial": 45,
+      "learning_rate": 7.4507444359013794e-06,
+      "batch_size": 16,
+      "dropout": 0.026889180006610777,
+      "frozen_layers": 1,
+      "f1_score": 0.6754748120312494,
+      "accuracy": 0.679,
+      "is_best": false
+    },
+    {
+      "trial": 46,
+      "learning_rate": 7.622831504427531e-05,
+      "batch_size": 16,
+      "dropout": 0.06236754558672857,
+      "frozen_layers": 1,
+      "f1_score": 0.6848559980118613,
+      "accuracy": 0.685,
+      "is_best": false
+    },
+    {
+      "trial": 47,
+      "learning_rate": 1.852500361826697e-06,
+      "batch_size": 16,
+      "dropout": 0.024739781101314685,
+      "frozen_layers": 1,
+      "f1_score": 0.5206339617755971,
+      "accuracy": 0.609,
+      "is_best": false
+    },
+    {
+      "trial": 48,
+      "learning_rate": 3.75493724987377e-05,
+      "batch_size": 16,
+      "dropout": 0.0001976657482583022,
+      "frozen_layers": 1,
+      "f1_score": 0.6854979419144296,
+      "accuracy": 0.686,
+      "is_best": false
+    },
+    {
+      "trial": 49,
+      "learning_rate": 2.5561872004794237e-05,
+      "batch_size": 16,
+      "dropout": 0.04322679176613553,
+      "frozen_layers": 1,
+      "f1_score": 0.6948478038317166,
+      "accuracy": 0.694,
+      "is_best": false
+    },
+    {
+      "trial": 50,
+      "learning_rate": 6.314453317346644e-05,
+      "batch_size": 16,
+      "dropout": 0.06199334815395638,
+      "frozen_layers": 1,
+      "f1_score": 0.7060148269663423,
+      "accuracy": 0.705,
+      "is_best": false
+    }
+  ]
+}

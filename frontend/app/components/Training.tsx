@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
 import { Button } from '@/app/components/ui/button'
-import { api, TrainingParams, PSOParams, GAParams, BayesianParams } from '@/lib/api'
+import { api, TrainingParams, PSOParams, GAParams, BayesianParams, OptimizationConfig } from '@/lib/api'
 import { Loader2, Play, Settings, TrendingUp, Zap, BarChart3, Maximize2, CheckCircle, CheckCircle2, Trophy } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, Cell
 } from 'recharts'
 import PSOVisualization from '@/app/components/PSOVisualization'
+import { ParameterOptimizationControls } from './ParameterOptimizationControls'
 
 interface TrainingProps {
   mode: 'optimization'
@@ -17,7 +18,8 @@ interface TrainingProps {
 }
 
 export default function Training({ mode, onTrainingComplete }: TrainingProps) {
-  // Default to PSO tab in optimization mode
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
   const [activeMode, setActiveMode] = useState<'pso' | 'ga' | 'bayesian'>('pso')
   const [isTraining, setIsTraining] = useState(false)
   const [trainingProgress, setTrainingProgress] = useState(0)
@@ -48,7 +50,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
   
   // PSO parameters (optimized defaults)
   const [psoParams, setPsoParams] = useState<PSOParams>({
-    swarmsize: 8,
+    swarmsize: 10,
     maxiter: 15
   })
   
@@ -93,8 +95,24 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
   // Track which algorithm is currently training
   const [activeTraining, setActiveTraining] = useState<string | null>(null)
 
+  // Persisted optimization config (optimize/fixed) loaded from backend
+  const [optimizationConfig, setOptimizationConfig] = useState<OptimizationConfig | null>(null)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
+
   useEffect(() => {
     loadHyperparameters()
+    // Load saved optimize/fixed config so UI restores after refresh
+    api.getOptimizationConfig().then(setOptimizationConfig).catch(() => {})
+    // Load saved algorithm settings (PSO/GA/Bayesian) to restore after refresh
+    api.getAlgorithmSettings()
+      .then((settings) => {
+        try {
+          if (settings?.pso) setPsoParams((prev) => ({ ...prev, ...settings.pso }))
+          if (settings?.ga) setGaParams((prev) => ({ ...prev, ...settings.ga }))
+          if (settings?.bayesian) setBayesianParams((prev) => ({ ...prev, ...settings.bayesian }))
+        } catch {}
+      })
+      .catch(() => {})
     loadSavedResults()  // Load all algorithm results
     loadPSOHistory()
     loadGAHistory()
@@ -222,6 +240,69 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
       setHyperparameters(data)
     } catch (error) {
       console.error('Failed to load hyperparameters:', error)
+    }
+  }
+
+  const getDefaultParamValues = () => {
+    const baseline = hyperparameters?.baseline || {
+      learning_rate: 2e-5,
+      batch_size: 16,
+      dropout: 0.1,
+      frozen_layers: 0,
+    }
+    return baseline
+  }
+
+  // Derived Bayesian display values (latest metrics with history fallback)
+  const lastBayesianHistoryEntry = bayesianHistory.length > 0 ? bayesianHistory[bayesianHistory.length - 1] : null
+  const bayesianHistoryParams = lastBayesianHistoryEntry?.best_params
+  const bayesianDisplayF1 =
+    typeof bayesianResults?.f1_score === 'number' && bayesianResults.f1_score > 0
+      ? bayesianResults.f1_score
+      : typeof bayesianHistoryParams?.f1_score === 'number'
+        ? bayesianHistoryParams.f1_score
+        : 0
+  const bayesianDisplayAccuracy =
+    typeof bayesianResults?.accuracy === 'number' && bayesianResults.accuracy > 0
+      ? bayesianResults.accuracy
+      : typeof bayesianHistoryParams?.accuracy === 'number'
+        ? bayesianHistoryParams.accuracy
+        : 0
+  const bayesianHasOptimizationMetrics = bayesianDisplayF1 > 0 || bayesianDisplayAccuracy > 0
+  const bayesianDisplayParams =
+    bayesianResults?.best_params && Object.keys(bayesianResults.best_params).length > 0
+      ? bayesianResults.best_params
+      : bayesianHistoryParams || {}
+  const hasBayesianParams = Object.keys(bayesianDisplayParams).length > 0
+  const bayesianFullF1 = typeof bayesianFullDataResults?.f1_score === 'number' ? bayesianFullDataResults.f1_score : null
+  const bayesianFullAccuracy = typeof bayesianFullDataResults?.accuracy === 'number' ? bayesianFullDataResults.accuracy : null
+  const bayesianMainF1 = bayesianFullF1 ?? bayesianDisplayF1
+  const bayesianMainAccuracy = bayesianFullAccuracy ?? bayesianDisplayAccuracy
+  const bayesianStatLabelSuffix = bayesianFullDataResults ? ' (Full Data)' : ' (20% data)'
+  const bayesianHasMetrics = bayesianHasOptimizationMetrics || bayesianFullF1 !== null || bayesianFullAccuracy !== null
+
+  const handleTabChange = (mode: 'pso' | 'ga' | 'bayesian') => {
+    setActiveMode(mode)
+  };
+
+  const startWithOptimization = async (
+    algorithm: 'pso' | 'ga' | 'bayesian',
+    cfg: OptimizationConfig
+  ) => {
+    try {
+      await api.saveOptimizationConfig(cfg)
+      if (algorithm === 'pso') {
+        await api.saveAlgorithmSettings('pso', psoParams).catch(() => {})
+        await startPSOTraining()
+      } else if (algorithm === 'ga') {
+        await api.saveAlgorithmSettings('ga', gaParams).catch(() => {})
+        await startGATraining()
+      } else {
+        await api.saveAlgorithmSettings('bayesian', bayesianParams).catch(() => {})
+        await startBayesianTraining()
+      }
+    } catch (e) {
+      console.error('Failed to start optimization with config:', e)
     }
   }
 
@@ -706,45 +787,61 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
     const results = []
     
     // Add PSO - use full data results if available, otherwise optimization results
-    const psoData = psoFullDataResults || psoResults?.best_params
+    const psoData = psoFullDataResults || psoResults?.best_params || psoResults
     results.push({
       algorithm: 'PSO',
-      f1_score: psoFullDataResults?.f1_score || psoResults?.best_params?.f1_score || defaultValues.f1_score,
-      accuracy: psoFullDataResults?.accuracy || psoResults?.best_params?.accuracy || defaultValues.accuracy,
-      learning_rate: psoData?.learning_rate || psoResults?.best_params?.learning_rate || defaultValues.learning_rate,
-      batch_size: psoData?.batch_size || psoResults?.best_params?.batch_size || defaultValues.batch_size,
-      dropout: psoData?.dropout || psoResults?.best_params?.dropout || defaultValues.dropout,
-      frozen_layers: psoData?.frozen_layers || psoResults?.best_params?.frozen_layers || defaultValues.frozen_layers,
+      f1_score: psoFullDataResults?.f1_score || psoResults?.best_params?.f1_score || psoResults?.f1_score || defaultValues.f1_score,
+      accuracy: psoFullDataResults?.accuracy || psoResults?.best_params?.accuracy || psoResults?.accuracy || defaultValues.accuracy,
+      learning_rate: psoData?.learning_rate || psoResults?.best_params?.learning_rate || psoResults?.learning_rate || defaultValues.learning_rate,
+      batch_size: psoData?.batch_size || psoResults?.best_params?.batch_size || psoResults?.batch_size || defaultValues.batch_size,
+      dropout: psoData?.dropout || psoResults?.best_params?.dropout || psoResults?.dropout || defaultValues.dropout,
+      frozen_layers: psoData?.frozen_layers || psoResults?.best_params?.frozen_layers || psoResults?.frozen_layers || defaultValues.frozen_layers,
       training_time: psoResults?.training_time || defaultValues.training_time
     })
     
     // Add GA - use full data results if available, otherwise optimization results
-    const gaData = gaFullDataResults || gaResults?.best_params
+    const gaData = gaFullDataResults || gaResults?.best_params || gaResults
     results.push({
       algorithm: 'GA',
-      f1_score: gaFullDataResults?.f1_score || gaResults?.best_params?.f1_score || defaultValues.f1_score,
-      accuracy: gaFullDataResults?.accuracy || gaResults?.best_params?.accuracy || defaultValues.accuracy,
-      learning_rate: gaData?.learning_rate || gaResults?.best_params?.learning_rate || defaultValues.learning_rate,
-      batch_size: gaData?.batch_size || gaResults?.best_params?.batch_size || defaultValues.batch_size,
-      dropout: gaData?.dropout || gaResults?.best_params?.dropout || defaultValues.dropout,
-      frozen_layers: gaData?.frozen_layers || gaResults?.best_params?.frozen_layers || defaultValues.frozen_layers,
+      f1_score: gaFullDataResults?.f1_score || gaResults?.best_params?.f1_score || gaResults?.f1_score || defaultValues.f1_score,
+      accuracy: gaFullDataResults?.accuracy || gaResults?.best_params?.accuracy || gaResults?.accuracy || defaultValues.accuracy,
+      learning_rate: gaData?.learning_rate || gaResults?.best_params?.learning_rate || gaResults?.learning_rate || defaultValues.learning_rate,
+      batch_size: gaData?.batch_size || gaResults?.best_params?.batch_size || gaResults?.batch_size || defaultValues.batch_size,
+      dropout: gaData?.dropout || gaResults?.best_params?.dropout || gaResults?.dropout || defaultValues.dropout,
+      frozen_layers: gaData?.frozen_layers || gaResults?.best_params?.frozen_layers || gaResults?.frozen_layers || defaultValues.frozen_layers,
       training_time: gaResults?.training_time || defaultValues.training_time
     })
     
     // Add Bayesian - use full data results if available, otherwise optimization results
-    const bayesianData = bayesianFullDataResults || bayesianResults?.best_params
+    const bayesianData = bayesianFullDataResults || bayesianResults?.best_params || bayesianResults
     results.push({
       algorithm: 'Bayesian',
-      f1_score: bayesianFullDataResults?.f1_score || bayesianResults?.best_params?.f1_score || defaultValues.f1_score,
-      accuracy: bayesianFullDataResults?.accuracy || bayesianResults?.best_params?.accuracy || defaultValues.accuracy,
-      learning_rate: bayesianData?.learning_rate || bayesianResults?.best_params?.learning_rate || defaultValues.learning_rate,
-      batch_size: bayesianData?.batch_size || bayesianResults?.best_params?.batch_size || defaultValues.batch_size,
-      dropout: bayesianData?.dropout || bayesianResults?.best_params?.dropout || defaultValues.dropout,
-      frozen_layers: bayesianData?.frozen_layers || bayesianResults?.best_params?.frozen_layers || defaultValues.frozen_layers,
+      f1_score: bayesianFullDataResults?.f1_score || bayesianResults?.best_params?.f1_score || bayesianResults?.f1_score || defaultValues.f1_score,
+      accuracy: bayesianFullDataResults?.accuracy || bayesianResults?.best_params?.accuracy || bayesianResults?.accuracy || defaultValues.accuracy,
+      learning_rate: bayesianData?.learning_rate || bayesianResults?.best_params?.learning_rate || bayesianResults?.learning_rate || defaultValues.learning_rate,
+      batch_size: bayesianData?.batch_size || bayesianResults?.best_params?.batch_size || bayesianResults?.batch_size || defaultValues.batch_size,
+      dropout: bayesianData?.dropout || bayesianResults?.best_params?.dropout || bayesianResults?.dropout || defaultValues.dropout,
+      frozen_layers: bayesianData?.frozen_layers || bayesianResults?.best_params?.frozen_layers || bayesianResults?.frozen_layers || defaultValues.frozen_layers,
       training_time: bayesianResults?.training_time || defaultValues.training_time
     })
     
     return results
+  }
+
+  const renderParamMode = (sel: any, param: 'learning_rate'|'batch_size'|'dropout'|'frozen_layers') => {
+    if (!sel) return null
+    const isOpt = sel.optimize?.[param]
+    if (isOpt) {
+      return <span className="ml-2 text-xs px-2 py-0.5 rounded bg-green-100 text-green-700">Optimized</span>
+    }
+    const val = sel.fixed?.[param]
+    let display: any = val
+    try {
+      if (param === 'learning_rate' && typeof val === 'number' && Number.isFinite(val)) {
+        display = (val as number).toExponential(2)
+      }
+    } catch {}
+    return <span className="ml-2 text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-700">Fixed: {display ?? 'N/A'}</span>
   }
 
   const ChartFullscreen = ({ title, children }: { title: string; children: React.ReactNode }) => {
@@ -765,6 +862,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
         </div>
       </div>
     )
+  }
+
+  if (!mounted) {
+    return <div className="space-y-6" />
   }
 
   return (
@@ -856,6 +957,26 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
             </CardContent>
           </Card>
 
+          <ParameterOptimizationControls
+            algorithm="pso"
+            defaultParams={getDefaultParamValues()}
+            initialConfig={optimizationConfig ?? undefined}
+            isTraining={isTraining}
+            onSave={async (params) => {
+              try {
+                await api.saveOptimizationConfig(params as any)
+                await api.saveAlgorithmSettings('pso', psoParams)
+                setOptimizationConfig(params as any)
+                setToastMessage('Settings saved successfully')
+                setTimeout(() => setToastMessage(null), 2000)
+              } catch (e) {
+                console.error(e)
+                setToastMessage('Failed to save settings')
+                setTimeout(() => setToastMessage(null), 2500)
+              }
+            }}
+          />
+
           <Card>
             <CardHeader>
               <CardTitle className="text-sm">🔍 Search Space (Expanded Range)</CardTitle>
@@ -934,7 +1055,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               ) : (
                 <>
                   <Zap className="mr-2 h-4 w-4" />
-                  Start PSO Optimization
+                  Optimize
                 </>
               )}
             </Button>
@@ -1041,7 +1162,27 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               </div>
             </CardContent>
           </Card>
-          
+
+          <ParameterOptimizationControls
+            algorithm="ga"
+            defaultParams={getDefaultParamValues()}
+            initialConfig={optimizationConfig ?? undefined}
+            isTraining={isTraining}
+            onSave={async (params) => {
+              try {
+                await api.saveOptimizationConfig(params as any)
+                await api.saveAlgorithmSettings('ga', gaParams)
+                setOptimizationConfig(params as any)
+                setToastMessage('Settings saved successfully')
+                setTimeout(() => setToastMessage(null), 2000)
+              } catch (e) {
+                console.error(e)
+                setToastMessage('Failed to save settings')
+                setTimeout(() => setToastMessage(null), 2500)
+              }
+            }}
+          />
+
           <Card>
           <CardHeader>
             <CardTitle>Genetic Algorithm Parameters</CardTitle>
@@ -1094,7 +1235,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               ) : (
                 <>
                   <TrendingUp className="mr-2 h-4 w-4" />
-                  Start Genetic Algorithm
+                  Optimize
                 </>
               )}
             </Button>
@@ -1164,7 +1305,27 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               </div>
             </CardContent>
           </Card>
-          
+
+          <ParameterOptimizationControls
+            algorithm="bayesian"
+            defaultParams={getDefaultParamValues()}
+            initialConfig={optimizationConfig ?? undefined}
+            isTraining={isTraining}
+            onSave={async (params) => {
+              try {
+                await api.saveOptimizationConfig(params as any)
+                await api.saveAlgorithmSettings('bayesian', bayesianParams)
+                setOptimizationConfig(params as any)
+                setToastMessage('Settings saved successfully')
+                setTimeout(() => setToastMessage(null), 2000)
+              } catch (e) {
+                console.error(e)
+                setToastMessage('Failed to save settings')
+                setTimeout(() => setToastMessage(null), 2500)
+              }
+            }}
+          />
+
           <Card>
           <CardHeader>
             <CardTitle>Bayesian Optimization Parameters</CardTitle>
@@ -1205,7 +1366,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               ) : (
                 <>
                   <BarChart3 className="mr-2 h-4 w-4" />
-                  Start Bayesian Optimization
+                  Optimize
                 </>
               )}
             </Button>
@@ -1236,7 +1397,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
       
       {/* PSO Results */}
       {activeMode === 'pso' && (
-        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+        <Card
+          key={`pso-${psoResults?.completedAt || psoResults?.best_params?.f1_score || psoResults?.f1_score || 'na'}`}
+          className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200"
+        >
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -1246,7 +1410,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               {psoFullDataResults ? (
                 <>Trained on 100% of data • Completed at {new Date(psoFullDataResults.completedAt).toLocaleString()}</>
               ) : psoResults?.completedAt ? (
-                <>Optimization completed at {new Date(psoResults.completedAt).toLocaleString()} • Trained on 5% of data
+                <>Optimization completed at {new Date(psoResults.completedAt).toLocaleString()} • Trained on 20% of data
                 {psoResults.training_time && ` • Time: ${(psoResults.training_time / 60).toFixed(1)} min`}</>
               ) : (
                 'No PSO optimization run yet'
@@ -1254,10 +1418,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Show 5% optimization results - always show if we have results */}
+            {/* Show 20% optimization results - always show if we have results */}
             {psoResults?.best_params && (
               <div className="mb-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                <p className="text-xs font-semibold text-purple-900 mb-2">Optimization Results (5% of data)</p>
+                <p className="text-xs font-semibold text-purple-900 mb-2">Optimization Results (20% of data)</p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>F1 Score: <span className="font-semibold">{(psoResults.best_params.f1_score * 100).toFixed(2)}%</span></div>
                   <div>Accuracy: <span className="font-semibold">{(psoResults.best_params.accuracy * 100).toFixed(2)}%</span></div>
@@ -1295,10 +1459,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
                 <div className="p-4 bg-white rounded-lg border">
                   <h4 className="font-semibold mb-2">Best Parameters Found</h4>
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div><span className="font-medium">Learning Rate:</span> {psoResults.best_params?.learning_rate?.toExponential(2) || 'N/A'}</div>
-                    <div><span className="font-medium">Batch Size:</span> {psoResults.best_params?.batch_size || 'N/A'}</div>
-                    <div><span className="font-medium">Dropout:</span> {psoResults.best_params?.dropout?.toFixed(3) || 'N/A'}</div>
-                    <div><span className="font-medium">Frozen Layers:</span> {psoResults.best_params?.frozen_layers || 'N/A'}</div>
+                    <div><span className="font-medium">Learning Rate:</span> {psoResults.best_params?.learning_rate?.toExponential(2) || 'N/A'}{renderParamMode(psoResults?.parameter_selection,'learning_rate')}</div>
+                    <div><span className="font-medium">Batch Size:</span> {psoResults.best_params?.batch_size || 'N/A'}{renderParamMode(psoResults?.parameter_selection,'batch_size')}</div>
+                    <div><span className="font-medium">Dropout:</span> {psoResults.best_params?.dropout?.toFixed(3) || 'N/A'}{renderParamMode(psoResults?.parameter_selection,'dropout')}</div>
+                    <div><span className="font-medium">Frozen Layers:</span> {psoResults.best_params?.frozen_layers || 'N/A'}{renderParamMode(psoResults?.parameter_selection,'frozen_layers')}</div>
                     <div className="col-span-2 flex items-center gap-2">
                       <span className="font-medium">Epochs:</span>
                       <input
@@ -1372,7 +1536,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
 
       {/* GA Results */}
       {activeMode === 'ga' && (
-        <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+        <Card
+          key={`ga-${gaResults?.completedAt || gaResults?.best_params?.f1_score || gaResults?.f1_score || 'na'}`}
+          className="bg-gradient-to-br from-green-50 to-green-100 border-green-200"
+        >
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -1382,7 +1549,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
               {gaFullDataResults ? (
                 <>Trained on 100% of data • Completed at {new Date(gaFullDataResults.completedAt).toLocaleString()}</>
               ) : gaResults?.completedAt ? (
-                <>Optimization completed at {new Date(gaResults.completedAt).toLocaleString()} • Trained on 5% of data
+                <>Optimization completed at {new Date(gaResults.completedAt).toLocaleString()} • Trained on 20% of data
                 {gaResults.training_time && ` • Time: ${(gaResults.training_time / 60).toFixed(1)} min`}</>
               ) : (
                 'No GA optimization run yet'
@@ -1390,10 +1557,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Show 5% optimization results - always show if we have results */}
+            {/* Show 20% optimization results - always show if we have results */}
             {gaResults?.best_params && (
               <div className="mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                <p className="text-xs font-semibold text-green-900 mb-2">Optimization Results (5% of data)</p>
+                <p className="text-xs font-semibold text-green-900 mb-2">Optimization Results (20% of data)</p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>F1 Score: <span className="font-semibold">{(gaResults.best_params.f1_score * 100).toFixed(2)}%</span></div>
                   <div>Accuracy: <span className="font-semibold">{(gaResults.best_params.accuracy * 100).toFixed(2)}%</span></div>
@@ -1431,10 +1598,10 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
                 <div className="p-4 bg-white rounded-lg border">
                   <h4 className="font-semibold mb-2">Best Parameters Found</h4>
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div><span className="font-medium">Learning Rate:</span> {gaResults.best_params?.learning_rate?.toExponential(2) || 'N/A'}</div>
-                    <div><span className="font-medium">Batch Size:</span> {gaResults.best_params?.batch_size || 'N/A'}</div>
-                    <div><span className="font-medium">Dropout:</span> {gaResults.best_params?.dropout?.toFixed(3) || 'N/A'}</div>
-                    <div><span className="font-medium">Frozen Layers:</span> {gaResults.best_params?.frozen_layers || 'N/A'}</div>
+                    <div><span className="font-medium">Learning Rate:</span> {gaResults.best_params?.learning_rate?.toExponential(2) || 'N/A'}{renderParamMode(gaResults?.parameter_selection,'learning_rate')}</div>
+                    <div><span className="font-medium">Batch Size:</span> {gaResults.best_params?.batch_size || 'N/A'}{renderParamMode(gaResults?.parameter_selection,'batch_size')}</div>
+                    <div><span className="font-medium">Dropout:</span> {gaResults.best_params?.dropout?.toFixed(3) || 'N/A'}{renderParamMode(gaResults?.parameter_selection,'dropout')}</div>
+                    <div><span className="font-medium">Frozen Layers:</span> {gaResults.best_params?.frozen_layers || 'N/A'}{renderParamMode(gaResults?.parameter_selection,'frozen_layers')}</div>
                     <div className="col-span-2 flex items-center gap-2">
                       <span className="font-medium">Epochs:</span>
                       <input
@@ -1507,69 +1674,59 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
 
       {/* Bayesian Results */}
       {activeMode === 'bayesian' && (
-        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+        <Card
+          key={`bayes-${bayesianResults?.completedAt || bayesianDisplayF1 || 'na'}`}
+          className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200"
+        >
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-600" />
               {bayesianFullDataResults ? 'Bayesian Training Results (Full Data)' : 'Bayesian Optimization Results'}
             </CardTitle>
             <CardDescription>
-              {bayesianFullDataResults ? (
-                <>Trained on 100% of data • Completed at {new Date(bayesianFullDataResults.completedAt).toLocaleString()}</>
-              ) : bayesianResults?.completedAt ? (
-                <>Optimization completed at {new Date(bayesianResults.completedAt).toLocaleString()} • Trained on 5% of data
-                {bayesianResults.training_time && ` • Time: ${(bayesianResults.training_time / 60).toFixed(1)} min`}</>
+              {bayesianResults?.completedAt ? (
+                <>
+                  Optimization completed at {new Date(bayesianResults.completedAt).toLocaleString()} • Trained on 20% of data
+                  {typeof bayesianResults.training_time === 'number' && bayesianResults.training_time > 0 ? ` • Time: ${(bayesianResults.training_time / 60).toFixed(1)} min` : ''}
+                </>
               ) : (
                 'No Bayesian optimization run yet'
               )}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Show 5% optimization results - always show if we have results */}
-            {bayesianResults?.best_params && (
+            {bayesianHasOptimizationMetrics ? (
               <div className="mb-4 p-3 bg-orange-50 rounded-lg border border-orange-200">
-                <p className="text-xs font-semibold text-orange-900 mb-2">Optimization Results (5% of data)</p>
+                <p className="text-xs font-semibold text-orange-900 mb-2">Optimization Results (20% of data)</p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div>F1 Score: <span className="font-semibold">{(bayesianResults.best_params.f1_score * 100).toFixed(2)}%</span></div>
-                  <div>Accuracy: <span className="font-semibold">{(bayesianResults.best_params.accuracy * 100).toFixed(2)}%</span></div>
+                  <div>F1 Score: <span className="font-semibold">{(bayesianDisplayF1 * 100).toFixed(2)}%</span></div>
+                  <div>Accuracy: <span className="font-semibold">{(bayesianDisplayAccuracy * 100).toFixed(2)}%</span></div>
                 </div>
               </div>
+            ) : (
+              <p className="mb-4 text-sm text-gray-600">Bayesian optimization has not produced metrics yet.</p>
             )}
-            
+
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="p-3 bg-blue-100 rounded-lg text-center">
-                <p className="text-sm text-blue-900">F1 Score</p>
-                <p className="text-2xl font-bold text-blue-600">
-                  {bayesianFullDataResults ? 
-                    `${(bayesianFullDataResults.f1_score * 100).toFixed(2)}%` :
-                    bayesianResults?.best_params?.f1_score || bayesianResults?.best_score ? 
-                      `${((bayesianResults.best_params?.f1_score || bayesianResults.best_score) * 100).toFixed(2)}%` : 
-                      '0.00%'
-                  }
-                </p>
+                <p className="text-sm text-blue-900">F1 Score{bayesianStatLabelSuffix}</p>
+                <p className="text-2xl font-bold text-blue-600">{(bayesianMainF1 * 100).toFixed(2)}%</p>
               </div>
               <div className="p-3 bg-green-100 rounded-lg text-center">
-                <p className="text-sm text-green-900">Accuracy</p>
-                <p className="text-2xl font-bold text-green-600">
-                  {bayesianFullDataResults ? 
-                    `${(bayesianFullDataResults.accuracy * 100).toFixed(2)}%` :
-                    bayesianResults?.best_params?.accuracy ? 
-                      `${(bayesianResults.best_params.accuracy * 100).toFixed(2)}%` : 
-                      '0.00%'
-                  }
-                </p>
+                <p className="text-sm text-green-900">Accuracy{bayesianStatLabelSuffix}</p>
+                <p className="text-2xl font-bold text-green-600">{(bayesianMainAccuracy * 100).toFixed(2)}%</p>
               </div>
             </div>
-            
-            {bayesianResults?.best_params && (
+
+            {hasBayesianParams && (
               <>
                 <div className="p-4 bg-white rounded-lg border">
                   <h4 className="font-semibold mb-2">Best Parameters Found</h4>
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div><span className="font-medium">Learning Rate:</span> {bayesianResults.best_params?.learning_rate?.toExponential(2) || 'N/A'}</div>
-                    <div><span className="font-medium">Batch Size:</span> {bayesianResults.best_params?.batch_size || 'N/A'}</div>
-                    <div><span className="font-medium">Dropout:</span> {bayesianResults.best_params?.dropout?.toFixed(3) || 'N/A'}</div>
-                    <div><span className="font-medium">Frozen Layers:</span> {bayesianResults.best_params?.frozen_layers || 'N/A'}</div>
+                    <div><span className="font-medium">Learning Rate:</span> {typeof bayesianDisplayParams.learning_rate === 'number' ? bayesianDisplayParams.learning_rate.toExponential(2) : 'N/A'}{renderParamMode(bayesianResults?.parameter_selection,'learning_rate')}</div>
+                    <div><span className="font-medium">Batch Size:</span> {bayesianDisplayParams.batch_size ?? 'N/A'}{renderParamMode(bayesianResults?.parameter_selection,'batch_size')}</div>
+                    <div><span className="font-medium">Dropout:</span> {typeof bayesianDisplayParams.dropout === 'number' ? bayesianDisplayParams.dropout.toFixed(3) : 'N/A'}{renderParamMode(bayesianResults?.parameter_selection,'dropout')}</div>
+                    <div><span className="font-medium">Frozen Layers:</span> {bayesianDisplayParams.frozen_layers ?? 'N/A'}{renderParamMode(bayesianResults?.parameter_selection,'frozen_layers')}</div>
                     <div className="col-span-2 flex items-center gap-2">
                       <span className="font-medium">Epochs:</span>
                       <input
@@ -1584,19 +1741,19 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
                     </div>
                   </div>
                 </div>
-                
+
                 <Button
                   onClick={async () => {
+                    if (!bayesianDisplayParams) return
                     try {
                       setFullDataTraining({ active: true, algorithm: 'Bayesian', progress: 0, message: 'Starting training...' })
                       await api.trainOnFullData('bayesian', {
-                        learning_rate: bayesianResults.best_params.learning_rate,
-                        batch_size: bayesianResults.best_params.batch_size,
-                        dropout: bayesianResults.best_params.dropout,
-                        frozen_layers: bayesianResults.best_params.frozen_layers,
+                        learning_rate: Number(bayesianDisplayParams.learning_rate ?? bayesianResults?.best_params?.learning_rate),
+                        batch_size: Number(bayesianDisplayParams.batch_size ?? bayesianResults?.best_params?.batch_size),
+                        dropout: Number(bayesianDisplayParams.dropout ?? bayesianResults?.best_params?.dropout),
+                        frozen_layers: Number(bayesianDisplayParams.frozen_layers ?? bayesianResults?.best_params?.frozen_layers),
                         epochs: bayesianEpochs
                       })
-                      // Progress will be tracked by polling
                     } catch (error) {
                       console.error('Error starting full training:', error)
                       setFullDataTraining(null)
@@ -1617,8 +1774,7 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
                     </>
                   )}
                 </Button>
-                
-                {/* Full Data Training Progress */}
+
                 {fullDataTraining?.active && fullDataTraining.algorithm === 'Bayesian' && (
                   <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex justify-between text-sm mb-2">
@@ -1639,7 +1795,6 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
           </CardContent>
         </Card>
       )}
-
       {/* PSO Comprehensive Visualization - Only show in PSO tab */}
       {activeMode === 'pso' && psoAnimation.length > 0 && (
         <PSOVisualization psoHistory={psoHistory} psoAnimation={psoAnimation} />
@@ -1682,51 +1837,6 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
                   <p className="text-sm font-medium text-orange-900 mb-1">Batch Size</p>
                   <p className="text-3xl font-bold text-orange-600">
                     {gaHistory[gaHistory.length - 1].best_params.batch_size}
-                  </p>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Bayesian Results Display - Only show in Bayesian tab */}
-      {activeMode === 'bayesian' && bayesianAnimation.length > 0 && bayesianHistory.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="h-6 w-6 text-orange-600" />
-              Bayesian Optimization Complete
-            </CardTitle>
-            <CardDescription>
-              Evaluated {bayesianAnimation.length} trials • Total trials: {bayesianParams.n_trials}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {bayesianHistory.length > 0 && bayesianHistory[bayesianHistory.length - 1].best_params && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg">
-                  <p className="text-sm font-medium text-blue-900 mb-1">Best F1 Score</p>
-                  <p className="text-3xl font-bold text-blue-600">
-                    {(bayesianHistory[bayesianHistory.length - 1].best_params.f1_score * 100).toFixed(2)}%
-                  </p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg">
-                  <p className="text-sm font-medium text-green-900 mb-1">Accuracy</p>
-                  <p className="text-3xl font-bold text-green-600">
-                    {(bayesianHistory[bayesianHistory.length - 1].best_params.accuracy * 100).toFixed(2)}%
-                  </p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg">
-                  <p className="text-sm font-medium text-purple-900 mb-1">Learning Rate</p>
-                  <p className="text-2xl font-bold text-purple-600">
-                    {bayesianHistory[bayesianHistory.length - 1].best_params.learning_rate?.toFixed(6)}
-                  </p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-lg">
-                  <p className="text-sm font-medium text-orange-900 mb-1">Batch Size</p>
-                  <p className="text-3xl font-bold text-orange-600">
-                    {bayesianHistory[bayesianHistory.length - 1].best_params.batch_size}
                   </p>
                 </div>
               </div>
@@ -2054,6 +2164,13 @@ export default function Training({ mode, onTrainingComplete }: TrainingProps) {
           </ScatterChart>
         </ResponsiveContainer>
       </ChartFullscreen>
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <div className="px-4 py-3 rounded-md shadow-md text-white bg-emerald-600">
+            {toastMessage}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

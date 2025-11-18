@@ -76,6 +76,21 @@ export interface BayesianParams {
   n_trials: number
 }
 
+export interface OptimizationConfig {
+  optimize: {
+    learning_rate?: boolean
+    batch_size?: boolean
+    dropout?: boolean
+    frozen_layers?: boolean
+  }
+  fixed: {
+    learning_rate?: number
+    batch_size?: number
+    dropout?: number
+    frozen_layers?: number
+  }
+}
+
 export interface TrainingStatus {
   status: string
   message?: string
@@ -212,6 +227,26 @@ export const api = {
 
   async getHyperparameters(): Promise<any> {
     const response = await axios.get(`${API_URL}/hyperparameters`)
+    return response.data
+  },
+
+  async getOptimizationConfig(): Promise<OptimizationConfig> {
+    const response = await axios.get(`${API_URL}/optimization-config`)
+    return response.data
+  },
+
+  async saveOptimizationConfig(config: OptimizationConfig): Promise<any> {
+    const response = await axios.post(`${API_URL}/optimization-config`, config)
+    return response.data
+  },
+
+  async getAlgorithmSettings(): Promise<any> {
+    const response = await axios.get(`${API_URL}/algorithm-settings`)
+    return response.data
+  },
+
+  async saveAlgorithmSettings(algorithm: 'pso' | 'ga' | 'bayesian', settings: any): Promise<any> {
+    const response = await axios.post(`${API_URL}/algorithm-settings`, { algorithm, settings })
     return response.data
   },
 

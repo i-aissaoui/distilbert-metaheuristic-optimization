@@ -1,0 +1,34 @@
+{
+  "type": "ga",
+  "completedAt": "2025-11-18T11:28:34.871401",
+  "accuracy": 0.732,
+  "f1_score": 0.7330335083284724,
+  "message": "GA Optimization completed - Best F1: 0.7330",
+  "best_params": {
+    "learning_rate": 7.006026332764393e-05,
+    "batch_size": 16,
+    "dropout": 0.02571223826288365,
+    "frozen_layers": 1,
+    "f1_score": 0.7330335083284724,
+    "accuracy": 0.732
+  },
+  "optimization_params": {
+    "population_size": 10,
+    "num_generations": 15
+  },
+  "training_time": 2307.7594990730286,
+  "parameter_selection": {
+    "optimize": {
+      "learning_rate": true,
+      "batch_size": false,
+      "dropout": true,
+      "frozen_layers": false
+    },
+    "fixed": {
+      "learning_rate": 2e-05,
+      "batch_size": 16.0,
+      "dropout": 0.1,
+      "frozen_layers": 1.0
+    }
+  }
+}

@@ -16,7 +16,7 @@ warnings.filterwarnings('ignore')
 
 from .schemas import (
     PredictionRequest, PredictionResponse,
-    ModelInfo, HealthResponse
+    ModelInfo, HealthResponse, OptimizationConfig
 )
 from .model_loader import model_manager
 from .config import API_TITLE, API_VERSION, API_DESCRIPTION, ID_TO_LABEL, BASE_DIR
@@ -79,6 +79,19 @@ training_status = {
     "loss": 0.0,
     "message": ""
 }
+
+# Persist a unified training status file for the frontend loader
+def _save_training_status(extra: dict = None):
+    try:
+        status = {**training_status}
+        if extra:
+            status.update(extra)
+        out = BASE_DIR / "logs" / "training_status.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with open(out, 'w') as f:
+            json.dump(status, f, indent=2)
+    except Exception as e:
+        logger.error(f"Error saving unified training status: {e}")
 
 
 @app.on_event("startup")
@@ -260,9 +273,15 @@ async def get_ga_animation():
 async def get_bayesian_history():
     """Get Bayesian optimization history."""
     try:
-        log_file = BASE_DIR / "logs" / "bayesian_history.json"
-        if log_file.exists():
-            with open(log_file, 'r') as f:
+        # Try new organized structure first
+        organized_file = BASE_DIR / "logs" / "results" / "bayesian" / "history.json"
+        if organized_file.exists():
+            with open(organized_file, 'r') as f:
+                return json.load(f)
+        # Fallback to old location
+        legacy_file = BASE_DIR / "logs" / "bayesian_history.json"
+        if legacy_file.exists():
+            with open(legacy_file, 'r') as f:
                 return json.load(f)
         return {"message": "No Bayesian history available", "data": []}
     except Exception as e:
@@ -274,9 +293,15 @@ async def get_bayesian_history():
 async def get_bayesian_animation():
     """Get Bayesian trial animation data."""
     try:
-        log_file = BASE_DIR / "logs" / "bayesian_animation.json"
-        if log_file.exists():
-            with open(log_file, 'r') as f:
+        # Try new organized structure first
+        organized_file = BASE_DIR / "logs" / "results" / "bayesian" / "animation.json"
+        if organized_file.exists():
+            with open(organized_file, 'r') as f:
+                return json.load(f)
+        # Fallback to old location
+        legacy_file = BASE_DIR / "logs" / "bayesian_animation.json"
+        if legacy_file.exists():
+            with open(legacy_file, 'r') as f:
                 return json.load(f)
         return {"message": "No Bayesian animation data available", "data": []}
     except Exception as e:
@@ -311,6 +336,117 @@ async def get_hyperparameters():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/optimization-config", tags=["Training"])
+async def get_optimization_config():
+    """Return saved optimization config (optimize/fixed)."""
+    try:
+        # Primary (new) location
+        config_path = BASE_DIR / "config" / "optimization_config.json"
+        if config_path.exists():
+            with open(config_path, 'r') as f:
+                return json.load(f)
+        # Backward-compatible fallback (old) location
+        legacy_path = BASE_DIR / "logs" / "settings" / "optimization_config.json"
+        if legacy_path.exists():
+            with open(legacy_path, 'r') as f:
+                return json.load(f)
+        # Default: optimize all, no fixed
+        return {
+            "optimize": {
+                "learning_rate": True,
+                "batch_size": True,
+                "dropout": True,
+                "frozen_layers": True,
+            },
+            "fixed": {}
+        }
+    except Exception as e:
+        logger.error(f"Error loading optimization config: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/optimization-config", tags=["Training"])
+async def save_optimization_config(config: OptimizationConfig):
+    """Save optimization config to disk for optimizers to consume."""
+    try:
+        config_path = BASE_DIR / "config" / "optimization_config.json"
+        config_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Ensure all parameters are included in the config
+        config_dict = {
+            "optimize": {
+                "learning_rate": config.optimize.get("learning_rate", True),
+                "batch_size": config.optimize.get("batch_size", True),
+                "dropout": config.optimize.get("dropout", True),
+                "frozen_layers": config.optimize.get("frozen_layers", True)
+            },
+            "fixed": config.fixed or {}
+        }
+        
+        # Save the config
+        with open(config_path, 'w') as f:
+            json.dump(config_dict, f, indent=2)
+            
+        logger.info(f"Saved optimization config to {config_path}")
+        return {"status": "success", "message": "Optimization config saved"}
+        
+    except Exception as e:
+        logger.error(f"Error saving optimization config: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to save optimization config: {str(e)}"
+        )
+
+
+@app.get("/algorithm-settings", tags=["Training"])
+async def get_algorithm_settings():
+    """Return saved algorithm settings for PSO/GA/Bayesian."""
+    try:
+        settings_dir = BASE_DIR / "logs" / "settings"
+        settings_path = settings_dir / "algorithm_settings.json"
+        if settings_path.exists():
+            with open(settings_path, 'r') as f:
+                return json.load(f)
+        # Defaults
+        return {
+            "pso": {"swarmsize": 5, "maxiter": 10},
+            "ga": {"population_size": 5, "num_generations": 10},
+            "bayesian": {"n_trials": 10}
+        }
+    except Exception as e:
+        logger.error(f"Error loading algorithm settings: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/algorithm-settings", tags=["Training"])
+async def save_algorithm_settings(payload: dict):
+    """Save algorithm settings. Payload should include {algorithm, settings}."""
+    try:
+        algorithm = payload.get("algorithm")
+        settings = payload.get("settings")
+        if not algorithm or not isinstance(settings, dict):
+            raise HTTPException(status_code=400, detail="Provide 'algorithm' and 'settings' in body")
+        settings_dir = BASE_DIR / "logs" / "settings"
+        settings_dir.mkdir(parents=True, exist_ok=True)
+        settings_path = settings_dir / "algorithm_settings.json"
+        data = {}
+        if settings_path.exists():
+            with open(settings_path, 'r') as f:
+                try:
+                    data = json.load(f)
+                except Exception:
+                    data = {}
+        data[algorithm] = settings
+        with open(settings_path, 'w') as f:
+            json.dump(data, f, indent=2)
+        return {"status": "saved", "algorithm": algorithm, "settings": settings}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error saving algorithm settings: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/start-training", tags=["Training"])
 async def start_training(
     learning_rate: float = 2e-5,
@@ -341,7 +477,7 @@ async def start_training(
             "--frozen_layers", str(frozen_layers),
             "--epochs", str(epochs)
         ]
-        
+
         process = subprocess.Popen(
             cmd,
             cwd=str(BASE_DIR),
@@ -368,6 +504,7 @@ async def start_training(
             "message": "Starting training...",
             "start_time": start_time
         }
+        _save_training_status()
         
         # Log output in real-time and parse progress (non-blocking)
         import threading
@@ -410,6 +547,7 @@ async def start_training(
                         "loss": loss,
                         "message": f"Epoch {current_epoch}/{total_epochs} - Step {current}/{total}"
                     })
+                    _save_training_status()
                 
                 # Parse final metrics: "INFO:__main__:Final Accuracy: 0.9928"
                 if "Final Accuracy:" in line:
@@ -451,6 +589,7 @@ async def start_training(
                         training_status["message"] = f"Training completed - Accuracy: {training_status.get('accuracy', 0):.4f}, F1: {training_status.get('f1_score', 0):.4f}"
                         training_status["training_time"] = training_time
                         logger.info(f"✅ Training marked as completed with all metrics")
+                        _save_training_status()
                 
                 # Check if training completed (additional patterns)
                 if "Training Complete" in line or "Baseline Training Complete" in line or "Optimization Complete" in line:
@@ -460,6 +599,7 @@ async def start_training(
                     training_status["progress"] = 100
                     training_status["message"] = "Training completed successfully"
                     training_status["training_time"] = training_time
+                    _save_training_status()
         
         thread = threading.Thread(target=log_output, daemon=True)
         thread.start()
@@ -520,10 +660,37 @@ async def start_bayesian(
         # Log output in real-time (non-blocking) - filter to reduce noise
         import threading
         def log_output():
+            printed = {"done": False}
             for line in process.stdout:
-                # Only log important Bayesian messages
-                if any(keyword in line for keyword in ['Trial', 'Best', 'Complete', 'Starting', 'ERROR', 'WARNING']):
+                # Only log important Bayesian messages (broadened to include completion/saved lines)
+                if any(keyword in line for keyword in [
+                    'Trial', 'Best', 'F1', 'Accuracy', 'RESULT', 'Complete', 'completed', 'Starting', 'ERROR', 'WARNING', 'Saved', 'latest.json', 'Optimization Complete'
+                ]):
                     logger.info(f"[Bayesian] {line.strip()}")
+                # Mirror organized status.json to unified training_status.json if present
+                try:
+                    status_path = BASE_DIR / "logs" / "results" / "bayesian" / "status.json"
+                    if status_path.exists():
+                        with open(status_path, 'r') as f:
+                            s = json.load(f)
+                            _save_training_status({"algorithm": "bayesian", **s})
+                            # If completed and not yet printed, emit final metrics from latest.json
+                            if not printed["done"] and s.get("status") == "completed":
+                                latest_path = BASE_DIR / "logs" / "results" / "bayesian" / "latest.json"
+                                if latest_path.exists():
+                                    try:
+                                        with open(latest_path, 'r') as lf:
+                                            data = json.load(lf)
+                                            logger.info(
+                                                f"[Bayesian] FINAL -> F1: {data.get('f1_score')}, Acc: {data.get('accuracy')}, Msg: {data.get('message')}"
+                                            )
+                                    except Exception:
+                                        pass
+                                printed["done"] = True
+                    else:
+                        _save_training_status({"algorithm": "bayesian", "message": line.strip()})
+                except Exception:
+                    pass
         
         thread = threading.Thread(target=log_output, daemon=True)
         thread.start()
@@ -584,9 +751,34 @@ async def start_ga(
         import threading
         def log_output():
             for line in process.stdout:
-                # Only log important GA messages
-                if any(keyword in line for keyword in ['Generation', 'Best', 'Complete', 'Starting', 'ERROR', 'WARNING']):
+                # Only log important GA messages (broadened)
+                if any(keyword in line for keyword in [
+                    'Generation', 'Best', 'F1', 'Accuracy', 'RESULT', 'Complete', 'completed', 'Starting', 'ERROR', 'WARNING', 'Saved', 'latest.json', 'Optimization Complete'
+                ]):
                     logger.info(f"[GA] {line.strip()}")
+                # Mirror organized status.json
+                try:
+                    status_path = BASE_DIR / "logs" / "results" / "ga" / "status.json"
+                    if status_path.exists():
+                        with open(status_path, 'r') as f:
+                            s = json.load(f)
+                            _save_training_status({"algorithm": "ga", **s})
+                            if not printed["done"] and s.get("status") == "completed":
+                                latest_path = BASE_DIR / "logs" / "results" / "ga" / "latest.json"
+                                if latest_path.exists():
+                                    try:
+                                        with open(latest_path, 'r') as lf:
+                                            data = json.load(lf)
+                                            logger.info(
+                                                f"[GA] FINAL -> F1: {data.get('f1_score')}, Acc: {data.get('accuracy')}, Msg: {data.get('message')}"
+                                            )
+                                    except Exception:
+                                        pass
+                                printed["done"] = True
+                    else:
+                        _save_training_status({"algorithm": "ga", "message": line.strip()})
+                except Exception:
+                    pass
         
         thread = threading.Thread(target=log_output, daemon=True)
         thread.start()
@@ -648,9 +840,34 @@ async def start_pso(
         import threading
         def log_output():
             for line in process.stdout:
-                # Only log important PSO messages, skip individual particle training details
-                if any(keyword in line for keyword in ['Iteration', 'Best', 'Complete', 'Starting', 'ERROR', 'WARNING']):
+                # Only log important PSO messages (broadened), skip spammy inner-loop lines
+                if any(keyword in line for keyword in [
+                    'Iteration', 'Best', 'F1', 'Accuracy', 'RESULT', 'Complete', 'completed', 'Starting', 'ERROR', 'WARNING', 'Saved', 'latest.json', 'Optimization Complete'
+                ]):
                     logger.info(f"[PSO] {line.strip()}")
+                # Mirror organized status.json
+                try:
+                    status_path = BASE_DIR / "logs" / "results" / "pso" / "status.json"
+                    if status_path.exists():
+                        with open(status_path, 'r') as f:
+                            s = json.load(f)
+                            _save_training_status({"algorithm": "pso", **s})
+                            if not printed["done"] and s.get("status") == "completed":
+                                latest_path = BASE_DIR / "logs" / "results" / "pso" / "latest.json"
+                                if latest_path.exists():
+                                    try:
+                                        with open(latest_path, 'r') as lf:
+                                            data = json.load(lf)
+                                            logger.info(
+                                                f"[PSO] FINAL -> F1: {data.get('f1_score')}, Acc: {data.get('accuracy')}, Msg: {data.get('message')}"
+                                            )
+                                    except Exception:
+                                        pass
+                                printed["done"] = True
+                    else:
+                        _save_training_status({"algorithm": "pso", "message": line.strip()})
+                except Exception:
+                    pass
         
         thread = threading.Thread(target=log_output, daemon=True)
         thread.start()
@@ -938,6 +1155,103 @@ async def load_training_result(algorithm: str, file_name: str = "latest"):
 async def load_training_result_default(algorithm: str):
     """Load latest training result for an algorithm. Returns null if not found."""
     return await load_training_result(algorithm, "latest")
+
+
+# Unified history endpoints with organized-path-first and legacy fallback
+@app.get("/pso-history", tags=["Training"])
+async def get_pso_history():
+    try:
+        organized = BASE_DIR / "logs" / "results" / "pso" / "history.json"
+        legacy = BASE_DIR / "logs" / "pso_history.json"
+        path = organized if organized.exists() else legacy
+        if path.exists() and path.stat().st_size > 0:
+            with open(path, 'r') as f:
+                data = json.load(f)
+                return {"data": data}
+        return {"data": []}
+    except Exception as e:
+        logger.debug(f"Could not load PSO history: {e}")
+        return {"data": []}
+
+
+@app.get("/pso-animation", tags=["Training"])
+async def get_pso_animation():
+    try:
+        organized = BASE_DIR / "logs" / "results" / "pso" / "animation.json"
+        legacy = BASE_DIR / "logs" / "pso_animation.json"
+        path = organized if organized.exists() else legacy
+        if path.exists() and path.stat().st_size > 0:
+            with open(path, 'r') as f:
+                data = json.load(f)
+                return {"data": data}
+        return {"data": []}
+    except Exception as e:
+        logger.debug(f"Could not load PSO animation: {e}")
+        return {"data": []}
+
+
+@app.get("/ga-history", tags=["Training"])
+async def get_ga_history():
+    try:
+        organized = BASE_DIR / "logs" / "results" / "ga" / "history.json"
+        legacy = BASE_DIR / "logs" / "ga_history.json"
+        path = organized if organized.exists() else legacy
+        if path.exists() and path.stat().st_size > 0:
+            with open(path, 'r') as f:
+                data = json.load(f)
+                return {"data": data}
+        return {"data": []}
+    except Exception as e:
+        logger.debug(f"Could not load GA history: {e}")
+        return {"data": []}
+
+
+@app.get("/ga-animation", tags=["Training"])
+async def get_ga_animation():
+    try:
+        organized = BASE_DIR / "logs" / "results" / "ga" / "animation.json"
+        legacy = BASE_DIR / "logs" / "ga_animation.json"
+        path = organized if organized.exists() else legacy
+        if path.exists() and path.stat().st_size > 0:
+            with open(path, 'r') as f:
+                data = json.load(f)
+                return {"data": data}
+        return {"data": []}
+    except Exception as e:
+        logger.debug(f"Could not load GA animation: {e}")
+        return {"data": []}
+
+
+@app.get("/bayesian-history", tags=["Training"])
+async def get_bayesian_history():
+    try:
+        organized = BASE_DIR / "logs" / "results" / "bayesian" / "history.json"
+        legacy = BASE_DIR / "logs" / "bayesian_history.json"
+        path = organized if organized.exists() else legacy
+        if path.exists() and path.stat().st_size > 0:
+            with open(path, 'r') as f:
+                data = json.load(f)
+                return {"data": data}
+        return {"data": []}
+    except Exception as e:
+        logger.debug(f"Could not load Bayesian history: {e}")
+        return {"data": []}
+
+
+@app.get("/bayesian-animation", tags=["Training"])
+async def get_bayesian_animation():
+    try:
+        organized = BASE_DIR / "logs" / "results" / "bayesian" / "animation.json"
+        legacy = BASE_DIR / "logs" / "bayesian_animation.json"
+        path = organized if organized.exists() else legacy
+        if path.exists() and path.stat().st_size > 0:
+            with open(path, 'r') as f:
+                data = json.load(f)
+                return {"data": data}
+        return {"data": []}
+    except Exception as e:
+        logger.debug(f"Could not load Bayesian animation: {e}")
+        return {"data": []}
 
 
 @app.post("/clear-history", tags=["Training"])

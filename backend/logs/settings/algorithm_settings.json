@@ -1,0 +1,13 @@
+{
+  "pso": {
+    "swarmsize": 10,
+    "maxiter": 15
+  },
+  "ga": {
+    "population_size": 10,
+    "num_generations": 15
+  },
+  "bayesian": {
+    "n_trials": 20
+  }
+}

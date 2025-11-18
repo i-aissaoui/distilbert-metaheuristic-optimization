@@ -37,3 +37,9 @@ class HealthResponse(BaseModel):
     """Health check response."""
     status: str
     models_loaded: Dict[str, bool]
+
+
+class OptimizationConfig(BaseModel):
+    """Configuration for selecting which hyperparameters to optimize vs fix."""
+    optimize: Optional[Dict[str, bool]] = None
+    fixed: Optional[Dict[str, float]] = None

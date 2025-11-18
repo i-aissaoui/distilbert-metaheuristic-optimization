@@ -1,0 +1,12 @@
+{
+  "optimize": {
+    "learning_rate": true,
+    "batch_size": false,
+    "dropout": true,
+    "frozen_layers": false
+  },
+  "fixed": {
+    "batch_size": 16.0,
+    "frozen_layers": 1.0
+  }
+}

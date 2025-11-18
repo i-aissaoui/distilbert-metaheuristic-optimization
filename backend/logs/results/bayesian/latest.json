@@ -1,0 +1,36 @@
+{
+  "type": "bayesian",
+  "completedAt": "2025-11-18T18:15:50.208845",
+  "accuracy": 0.705,
+  "f1_score": 0.7060148269663423,
+  "message": "Bayesian Optimization - trial update",
+  "best_params": {
+    "learning_rate": 8.033989678772208e-05,
+    "batch_size": 16,
+    "dropout": 0.020869425190585406,
+    "frozen_layers": 1,
+    "f1_score": 0.7365724192589658,
+    "accuracy": 0.738
+  },
+  "optimization_params": {
+    "n_trials": 50
+  },
+  "training_time": 0.0,
+  "parameter_selection": {
+    "optimize": {
+      "learning_rate": true,
+      "batch_size": false,
+      "dropout": true,
+      "frozen_layers": false
+    },
+    "fixed": {
+      "learning_rate": 2e-05,
+      "batch_size": 16.0,
+      "dropout": 0.1,
+      "frozen_layers": 1.0
+    }
+  },
+  "full_data_f1_score": 0.0,
+  "full_data_accuracy": 0.0,
+  "best_score": 0.7365724192589658
+}

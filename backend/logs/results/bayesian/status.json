@@ -1,13 +1,5 @@
 {
   "status": "running",
-  "progress": 0,
-  "current_step": 0,
-  "total_steps": 0,
-  "current_epoch": 0,
-  "total_epochs": 0,
-  "loss": 0.0,
-  "message": "",
-  "algorithm": "bayesian",
   "trial": 50,
   "best_score": 0.7365724192589658,
   "best_params": {

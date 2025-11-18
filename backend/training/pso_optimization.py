@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class PSOOptimizer:
     """PSO-based hyperparameter optimizer for DistilBERT."""
     
-    def __init__(self, train_dataset, val_dataset, num_epochs=1, log_dir=None):
+    def __init__(self, train_dataset, val_dataset, num_epochs=1, log_dir=None, optimize_mask=None, fixed_values=None):
         self.train_dataset = train_dataset
         self.val_dataset = val_dataset
         self.num_epochs = num_epochs
@@ -51,6 +51,45 @@ class PSOOptimizer:
         # [learning_rate, batch_size, dropout, frozen_layers]
         self.lb = [1e-6, 4, 0.0, 0]    # Lower bounds - wider range
         self.ub = [1e-4, 64, 0.5, 6]   # Upper bounds - more options
+
+        # Optimization config
+        self.param_names = ['learning_rate', 'batch_size', 'dropout', 'frozen_layers']
+        default_fixed = {
+            'learning_rate': 2e-5,
+            'batch_size': 16,
+            'dropout': 0.1,
+            'frozen_layers': 0,
+        }
+        self.optimize_mask = optimize_mask or {
+            'learning_rate': True,
+            'batch_size': True,
+            'dropout': True,
+            'frozen_layers': True,
+        }
+        self.fixed_values = {**default_fixed, **(fixed_values or {})}
+        # Active indices for PSO search space
+        self.active_indices = [i for i, k in enumerate(self.param_names) if self.optimize_mask.get(k, True)]
+        # Active bounds
+        self.lb_active = [self.lb[i] for i in self.active_indices]
+        self.ub_active = [self.ub[i] for i in self.active_indices]
+
+    def _reconstruct_full_params(self, active_params):
+        """Map active params array back to full order [lr, batch, dropout, frozen]."""
+        values = []
+        ai = 0
+        for i, name in enumerate(self.param_names):
+            if self.optimize_mask.get(name, True):
+                v = active_params[ai]
+                ai += 1
+            else:
+                v = self.fixed_values.get(name)
+            values.append(v)
+        # Cast types
+        lr = float(values[0])
+        bs = int(values[1])
+        dr = float(values[2])
+        fr = int(values[3])
+        return lr, bs, dr, fr
     
     def objective_function(self, params):
         """
@@ -64,19 +103,20 @@ class PSOOptimizer:
         """
         self.particle_eval_count += 1
         
-        # Parse parameters
-        learning_rate = params[0]
-        batch_size = int(params[1])
-        dropout = params[2]
-        frozen_layers = int(params[3])
+        # Parse active parameters and reconstruct full vector
+        learning_rate, batch_size, dropout, frozen_layers = self._reconstruct_full_params(params)
         
         logger.info(f"\n{'='*60}")
         logger.info(f"Evaluating Particle {self.particle_eval_count}")
         logger.info(f"{'='*60}")
-        logger.info(f"Learning Rate: {learning_rate:.6f}")
-        logger.info(f"Batch Size: {batch_size}")
-        logger.info(f"Dropout: {dropout:.3f}")
-        logger.info(f"Frozen Layers: {frozen_layers}")
+        lr_mode = "optimized" if self.optimize_mask.get('learning_rate', True) else f"fixed ({self.fixed_values.get('learning_rate')})"
+        bs_mode = "optimized" if self.optimize_mask.get('batch_size', True) else f"fixed ({self.fixed_values.get('batch_size')})"
+        dr_mode = "optimized" if self.optimize_mask.get('dropout', True) else f"fixed ({self.fixed_values.get('dropout')})"
+        fr_mode = "optimized" if self.optimize_mask.get('frozen_layers', True) else f"fixed ({self.fixed_values.get('frozen_layers')})"
+        logger.info(f"Learning Rate: {learning_rate:.6f} [{lr_mode}]")
+        logger.info(f"Batch Size: {batch_size} [{bs_mode}]")
+        logger.info(f"Dropout: {dropout:.3f} [{dr_mode}]")
+        logger.info(f"Frozen Layers: {frozen_layers} [{fr_mode}]")
         logger.info("⏳ Loading model and preparing training...")
         
         try:
@@ -243,6 +283,10 @@ class PSOOptimizer:
         logger.info(f"  Batch Size: [{int(self.lb[1])}, {int(self.ub[1])}]")
         logger.info(f"  Dropout: [{self.lb[2]:.2f}, {self.ub[2]:.2f}]")
         logger.info(f"  Frozen Layers: [{int(self.lb[3])}, {int(self.ub[3])}]")
+        logger.info("Starting Parameter Modes:")
+        for name in self.param_names:
+            mode_str = "optimized" if self.optimize_mask.get(name, True) else f"fixed ({self.fixed_values.get(name)})"
+            logger.info(f"Starting - {name}: {mode_str}")
         logger.info(f"\n🚀 Starting PSO with {swarmsize * maxiter} total particle evaluations...")
         logger.info(f"⏳ This will take approximately {(swarmsize * maxiter * 1.5) / 60:.1f} minutes\n")
         sys.stdout.flush()
@@ -251,6 +295,37 @@ class PSOOptimizer:
         logger.info("🔄 Initializing PSO swarm...")
         sys.stdout.flush()
         
+        # Initialize latest.json to zeros to avoid stale values
+        try:
+            pso_results_dir = self.log_dir / "results" / "pso"
+            pso_results_dir.mkdir(parents=True, exist_ok=True)
+            init_latest = {
+                'type': 'pso',
+                'completedAt': __import__('datetime').datetime.now().isoformat(),
+                'accuracy': 0.0,
+                'f1_score': 0.0,
+                'message': 'PSO Optimization initializing...',
+                'best_params': {},
+                'optimization_params': {
+                    'swarmsize': swarmsize,
+                    'maxiter': maxiter
+                },
+                'total_iterations': maxiter,
+                'best_iteration': 0,
+                'training_time': 0.0,
+                'parameter_selection': {
+                    'optimize': self.optimize_mask,
+                    'fixed': self.fixed_values
+                },
+                'full_data_f1_score': 0.0,
+                'full_data_accuracy': 0.0,
+                'best_score': 0.0
+            }
+            with open(pso_results_dir / 'latest.json', 'w') as f:
+                json.dump(init_latest, f, indent=2)
+        except Exception:
+            pass
+
         # Reset status to starting state
         pso_results_dir = self.log_dir / "results" / "pso"
         pso_results_dir.mkdir(parents=True, exist_ok=True)
@@ -271,7 +346,7 @@ class PSOOptimizer:
         
         # Test: Call objective function once manually to verify it works
         logger.info("🧪 Testing objective function with initial parameters...")
-        test_params = [(self.lb[i] + self.ub[i]) / 2 for i in range(len(self.lb))]
+        test_params = [(self.lb_active[i] + self.ub_active[i]) / 2 for i in range(len(self.lb_active))]
         test_result = self.objective_function(test_params)
         logger.info(f"✅ Test complete! Result: {test_result}")
         sys.stdout.flush()
@@ -282,10 +357,10 @@ class PSOOptimizer:
         
         # Simple PSO implementation
         n_particles = swarmsize
-        n_dims = len(self.lb)
+        n_dims = len(self.lb_active)
         
         # Initialize particles randomly
-        particles = np.random.uniform(self.lb, self.ub, (n_particles, n_dims))
+        particles = np.random.uniform(self.lb_active, self.ub_active, (n_particles, n_dims))
         velocities = np.random.uniform(-0.1, 0.1, (n_particles, n_dims))
         
         # PSO parameters
@@ -344,7 +419,8 @@ class PSOOptimizer:
                 # Get detailed metrics from last evaluation
                 accuracy = self.best_params.get('accuracy', 0) if self.best_params else 0
                 
-                # Save particle data for visualization with detailed metrics
+                # Save particle data for visualization with detailed metrics (active + reconstructed)
+                lr, bs, dr, fr = self._reconstruct_full_params(particles[i])
                 particle_data = {
                     'iteration': iteration + 1,
                     'particle_id': i + 1,
@@ -353,10 +429,10 @@ class PSOOptimizer:
                     'f1_score': float(score),
                     'accuracy': float(accuracy),
                     'params': {
-                        'learning_rate': float(particles[i][0]),
-                        'batch_size': int(particles[i][1]),
-                        'dropout': float(particles[i][2]),
-                        'frozen_layers': int(particles[i][3])
+                        'learning_rate': float(lr),
+                        'batch_size': int(bs),
+                        'dropout': float(dr),
+                        'frozen_layers': int(fr)
                     },
                     'timestamp': __import__('datetime').datetime.now().isoformat()
                 }
@@ -367,10 +443,10 @@ class PSOOptimizer:
                     'particle_id': i + 1,
                     'f1_score': float(score),
                     'accuracy': float(accuracy),
-                    'learning_rate': float(particles[i][0]),
-                    'batch_size': int(particles[i][1]),
-                    'dropout': float(particles[i][2]),
-                    'frozen_layers': int(particles[i][3])
+                    'learning_rate': float(lr),
+                    'batch_size': int(bs),
+                    'dropout': float(dr),
+                    'frozen_layers': int(fr)
                 }
                 status_data['best_so_far'] = {
                     'f1_score': float(self.best_score),
@@ -393,18 +469,18 @@ class PSOOptimizer:
                     self.best_score = score
                     logger.info(f"🎉 New global best F1: {self.best_score:.4f}")
                     
-                    # Save to history
+                    # Save to history (use reconstructed full params from global_best_position)
                     history_entry = {
                         'iteration': iteration + 1,
                         'particle': i + 1,
                         'evaluation': total_evals,
                         'best_score': float(self.best_score),
-                        'best_params': {
-                            'learning_rate': float(global_best_position[0]),
-                            'batch_size': int(global_best_position[1]),
-                            'dropout': float(global_best_position[2]),
-                            'frozen_layers': int(global_best_position[3])
-                        }
+                        'best_params': (lambda lr, bs, dr, fr: {
+                            'learning_rate': float(lr),
+                            'batch_size': int(bs),
+                            'dropout': float(dr),
+                            'frozen_layers': int(fr)
+                        })(*self._reconstruct_full_params(global_best_position))
                     }
                     self.history.append(history_entry)
                     
@@ -429,7 +505,7 @@ class PSOOptimizer:
                 particles[i] = particles[i] + velocities[i]
                 
                 # Enforce bounds
-                particles[i] = np.clip(particles[i], self.lb, self.ub)
+                particles[i] = np.clip(particles[i], self.lb_active, self.ub_active)
         
         logger.info(f"\n✅ PSO Complete! Best F1: {self.best_score:.4f}")
         sys.stdout.flush()
@@ -439,11 +515,12 @@ class PSOOptimizer:
         sys.stdout.flush()
         if not self.best_params or self.best_params.get('f1_score', 0) < self.best_score:
             logger.info("Creating best_params from global_best_position")
+            lr, bs, dr, fr = self._reconstruct_full_params(global_best_position)
             self.best_params = {
-                'learning_rate': float(global_best_position[0]),
-                'batch_size': int(global_best_position[1]),
-                'dropout': float(global_best_position[2]),
-                'frozen_layers': int(global_best_position[3]),
+                'learning_rate': float(lr),
+                'batch_size': int(bs),
+                'dropout': float(dr),
+                'frozen_layers': int(fr),
                 'f1_score': float(self.best_score),
                 'accuracy': 0.0  # Will be updated from objective function
             }
@@ -455,6 +532,17 @@ class PSOOptimizer:
         end_time = time.time()
         optimization_time = end_time - start_time
         
+        # Determine last-evaluated metrics from animation_data (primary latest values)
+        last_f1 = float(self.best_score)
+        last_acc = float(self.best_params.get('accuracy', 0)) if self.best_params else 0.0
+        if self.animation_data:
+            try:
+                last_entry = self.animation_data[-1]
+                last_f1 = float(last_entry.get('f1_score', last_f1))
+                last_acc = float(last_entry.get('accuracy', last_acc))
+            except Exception:
+                pass
+
         # IMMEDIATELY save latest.json BEFORE status
         pso_results_dir = self.log_dir / "results" / "pso"
         pso_results_dir.mkdir(parents=True, exist_ok=True)
@@ -482,8 +570,8 @@ class PSOOptimizer:
             latest_result = {
                 'type': 'pso',
                 'completedAt': datetime.now().isoformat(),
-                'accuracy': float(self.best_params.get('accuracy', 0)) if self.best_params else 0.0,
-                'f1_score': float(self.best_score),
+                'accuracy': float(last_acc),
+                'f1_score': float(last_f1),
                 'message': f'PSO Optimization completed - Best F1: {self.best_score:.4f}',
                 'best_params': convert_to_native(self.best_params) if self.best_params else {},
                 'optimization_params': {
@@ -492,7 +580,16 @@ class PSOOptimizer:
                 },
                 'total_iterations': maxiter,
                 'best_iteration': int(self.particle_eval_count),
-                'training_time': float(optimization_time)
+                'training_time': float(optimization_time),
+                'parameter_selection': {
+                    'optimize': self.optimize_mask,
+                    'fixed': self.fixed_values
+                },
+                # Placeholders indicating 100% full-data training not yet performed
+                'full_data_f1_score': 0.0,
+                'full_data_accuracy': 0.0,
+                # Also include best-of-run for reference
+                'best_score': float(self.best_score)
             }
             latest_file = pso_results_dir / "latest.json"
             with open(latest_file, 'w') as f:
@@ -568,9 +665,9 @@ def run_pso_optimization():
     logger.info(f"Loading tokenizer: {MODEL_NAME}")
     tokenizer = DistilBertTokenizer.from_pretrained(MODEL_NAME)
     
-    # Prepare datasets - train on VERY small subset, test on full data for realistic accuracy gap
+    # Prepare datasets - train on small subset, test on full data for realistic accuracy gap
     logger.info("Preparing datasets...")
-    SUBSET_FRACTION = 0.05  # Use only 5% of data for training to show accuracy gap
+    SUBSET_FRACTION = 0.20  # Use 10% of data for training
     
     # Get full datasets first
     train_dataset_full, val_dataset_full, test_dataset_full = prepare_datasets(
@@ -589,12 +686,51 @@ def run_pso_optimization():
     logger.info(f"⚠️  Training on only {SUBSET_FRACTION*100:.0f}% of data, testing on 100% to demonstrate generalization gap")
     logger.info(f"Train size: {len(train_dataset_subset)}, Val size: {len(val_dataset_full)}")
     
+    # Load optimization config (optimize/fixed)
+    settings_dir = BASE_DIR / "logs" / "settings"
+    config_path = settings_dir / "optimization_config.json"
+    optimize = {
+        'learning_rate': True,
+        'batch_size': True,
+        'dropout': True,
+        'frozen_layers': True,
+    }
+    fixed = {
+        'learning_rate': 2e-5,
+        'batch_size': 16,
+        'dropout': 0.1,
+        'frozen_layers': 0,
+    }
+    try:
+        if config_path.exists():
+            with open(config_path, 'r') as f:
+                data = json.load(f)
+                # Track which keys are explicitly fixed in the config file
+                fixed_keys_cfg = set()
+                if isinstance(data.get('fixed'), dict):
+                    for k, v in data['fixed'].items():
+                        if v is not None:
+                            fixed[k] = v
+                            fixed_keys_cfg.add(k)
+                # Update optimize booleans explicitly from config
+                if isinstance(data.get('optimize'), dict):
+                    for k, v in data['optimize'].items():
+                        if v is not None:
+                            optimize[k] = bool(v)
+                # Force optimize False only for keys explicitly fixed by the user
+                for name in fixed_keys_cfg:
+                    optimize[name] = False
+    except Exception as e:
+        logger.warning(f"Could not load optimization config: {e}")
+
     # Initialize optimizer
     logger.info("Initializing PSO optimizer...")
     optimizer = PSOOptimizer(
         train_dataset=train_dataset_subset,
         val_dataset=val_dataset_full,
-        num_epochs=NUM_EPOCHS
+        num_epochs=NUM_EPOCHS,
+        optimize_mask=optimize,
+        fixed_values=fixed
     )
     
     # Run optimization

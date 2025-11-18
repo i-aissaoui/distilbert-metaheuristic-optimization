@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
 import { PredictionResponse } from '@/lib/api'
 import { getLabelColor, getLabelIcon, formatPercentage } from '@/lib/utils'
@@ -10,6 +11,8 @@ interface PredictionResultProps {
 }
 
 export default function PredictionResult({ result }: PredictionResultProps) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
   const chartData = Object.entries(result.all_probabilities).map(([label, probability]) => ({
     label,
     probability: probability * 100,
@@ -23,6 +26,17 @@ export default function PredictionResult({ result }: PredictionResultProps) {
       '0': '#16a34a',
     }
     return colors[label] || '#6b7280'
+  }
+
+  if (!mounted) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Analysis Result</CardTitle>
+          <CardDescription>Loading…</CardDescription>
+        </CardHeader>
+      </Card>
+    )
   }
 
   return (
